@@ -106,12 +106,12 @@ var firstUniqChar = function (s) {
   if (len === 1) return s; // 长度为一的字符直接返回该字符
   const map = new Map(); // 哈希表存值
   const arr = []; // 用数组维护字符的顺序
-  for (let i = 0; i < len; i++) {
-    if (map.has(s[i])) {
-      map.set(s[i], map.get(s[i]) + 1);
+  for (const str of s) {
+    if (map.has(str)) {
+      map.set(str, map.get(str) + 1);
     } else {
-      map.set(s[i], 1);
-      !arr.includes(s[i]) && arr.push(s[i]); // 避免重复往数组中推入相同的key
+      map.set(str, 1);
+      !arr.includes(str) && arr.push(str); // 避免重复往数组中推入相同的key
     }
   }
   for (const key of arr) {

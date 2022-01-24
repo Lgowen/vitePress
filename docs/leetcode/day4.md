@@ -116,12 +116,12 @@ var missingNumber = function (nums) {
   while (left <= right) {
     let middle = Math.floor((left + right) / 2);
     if (middle === nums[middle]) {
-      left = middle + 1;
+      left = middle + 1; // 相等时可理解为该值左边的值都是一一与索引值对应的 则缺失的值应该在右边
     } else {
-      right = middle - 1;
+      right = middle - 1; // 不等时可理解为该值或该值左边的值是缺失的 因为一旦出现某个值与索引不相等 则后面的值肯定也不会相等
     }
   }
 
-  return left;
+  return left; // left > right 时跳出循环 left对应索引为缺失的值 这个情况下left左边的值应该都是完整的
 };
 ```
