@@ -10,7 +10,8 @@ export function getLeetCodeMenuBar() {
         { text: '查找算法', link: '/leetcode/day4' },
         { text: '查找算法', link: '/leetcode/day5' },
         { text: '搜索与回溯算法', link: '/leetcode/day6'},
-        { text: '搜索与回溯算法', link: '/leetcode/day7'}
+        { text: '搜索与回溯算法', link: '/leetcode/day7'},
+        { text: '动态规划', link: '/leetcode/day8'}
       ]
     },
   ]
