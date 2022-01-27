@@ -2,7 +2,7 @@ import { getLeetCodeMenuBar } from './menu'
 const env = process.env.NODE_ENV === 'development' ? '/' : '/vitePress/'
 
 module.exports = {
-  title: "自动化部署成功啦！！！！！", // 网站标题
+  title: "用算法娱乐身心", // 网站标题
   description: "leetcode share.", //网站描述
 //   base: "/", //  部署时的路径 默认 /  可以使用二级地址 /base/
   base: env,
