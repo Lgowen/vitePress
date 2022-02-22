@@ -15,6 +15,7 @@
  * @param {number[]} nums
  * @return {number}
  */
+// [-2, 1, -2, 4, 3, 5, 6, 1, 5]
 // dp[n] = dp[n - 1] + nums[i] (dp[n - 1] > 0)
 // dp[n] = nums[i] (dp[n - 1] <= 0)
 var maxSubArray = function(nums) {  
@@ -56,9 +57,20 @@ var maxSubArray = function(nums) {
 // dp[x][y] 表示能拿到 = Max(dp[x][y - 1], dp[x - 1][y]) + grid[i][j]
 // 时间复杂度: O(MN)
 // 空间复杂度: O(1)
+// [
+//   [1,3,1],
+//   [1,5,1],
+//   [4,2,1]
+// ]
+// [
+//   [1, 4, 5],     [1, 4, 5]                    [1, 4, 5]                      [1, 4, 5]                     [1, 4, 5]
+//   [2, , ],   ->  [2, Max(2 + 5, 4 + 5), ] ->  [2, 9, Max(9 + 1, 5 + 1)]  ->  [2, 9, 10]                 -> [2, 9, 10]                   
+//   [6, , ]        [6, , ]                      [6, ,  ]                       [6, Max(6 + 2, 9 + 2),  ]     [6, 11, Max(10 + 1, 11 + 1) = 12] 
+// ]
 var maxValue = function(grid) {
     const x = grid.length // x轴长度
     const y = grid[0].length // y轴长度
+    let maxProfit = 0
 
     // 初始化第一列dp
     for (let i = 1; i < x; i++) {

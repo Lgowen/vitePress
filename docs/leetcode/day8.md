@@ -96,6 +96,15 @@ var numWays = function(n) {
 // 输出: 5
 // 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
 //      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+// 1. [7]: minCoat: 7 maxProfit: 0
+// 2. [7, 1]: minCoat: 1 maxProfit: 0
+// 3. [7, 1, 5]: minCoat: 1 maxProfit: Max(0, 5 - 1)
+// 4. [7, 1, 5, 3]: minCoat: 1 maxProfit: Max(4, 3 - 1)
+// 5. [7, 1, 5, 3, 6]: minCoat: 1 maxProfit: Max(4, 6 - 1)
+// 6. [7, 1, 5, 3, 6, 4]: minCoat: 1 maxProfit: Max(5, 4 - 1)
+// MaxProfit: 5
+// minCoat: 1
+
 // 示例 2:
 
 // 输入: [7,6,4,3,1]
@@ -105,6 +114,14 @@ var numWays = function(n) {
  * @param {number[]} prices
  * @return {number}
  */
+// 1. [7]: minCoat: 7 maxProfit: 0
+// 2. [7, 6]: minCoat: 6 maxProfit: 0
+// 3. [7, 6, 4]: minCoat: 4 maxProfit: 0
+// 4. [7, 6, 4, 3]: minCoat: 3 maxProfit: 0
+// 5. [7, 6, 4, 3, 1]: minCoat: 1 maxProfit: 0
+// MaxProfit: 0
+// minCoat: 1
+
 // 设dp[i]为前i日的最大利润，则dp[i-1]为前i-1日的最大利润
 // 前i日的最大利润 = 前i-1日的最大利润 和 第i日卖出去的利润（第i日的价格 - 前 i - 1 中的最低买入价格） 中的最大值
 // dp[i] = Max(dp[i - 1], price - Min(1 ~ i - 1))

@@ -1,4 +1,4 @@
-import { getLeetCodeMenuBar } from './menu'
+import { getLeetCodeMenuBar, getVueMenuBar } from './menu'
 const env = process.env.NODE_ENV === 'development' ? '/' : '/vitePress/'
 
 module.exports = {
@@ -25,7 +25,8 @@ module.exports = {
     nav: [],
     // 侧边栏
     sidebar: {
-      "/leetcode/": getLeetCodeMenuBar()
+      "/leetcode/": getLeetCodeMenuBar(),
+      "/vue/": getVueMenuBar()
     },
   }
 };
