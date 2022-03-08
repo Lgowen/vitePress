@@ -12,7 +12,8 @@ export function getLeetCodeMenuBar() {
         { text: '搜索与回溯算法', link: '/leetcode/day6'},
         { text: '搜索与回溯算法', link: '/leetcode/day7'},
         { text: '动态规划', link: '/leetcode/day8'},
-        { text: '动态规划', link: '/leetcode/day9'}
+        { text: '动态规划', link: '/leetcode/day9'},
+        { text: '动态规划', link: '/leetcode/day10'}
       ]
     },
   ]
