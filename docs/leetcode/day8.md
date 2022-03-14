@@ -137,7 +137,6 @@ var maxProfit = function(prices) {
     for(const price of prices) {
         minCost = Math.min(minCost, price); // 当前值与最低买入值相比得到当前轮次最低买入价
         maxProfit = Math.max(maxProfit, price - minCost); // 
-        console.log(minCost, maxProfit)
     }
 
     return maxProfit // 最后返回最大利润

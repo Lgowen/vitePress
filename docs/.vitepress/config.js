@@ -2,13 +2,6 @@ import { getVueMenuBar } from "./menu";
 import { readAllFiles } from "../utils";
 const env = process.env.NODE_ENV === "development" ? "/" : "/vitePress/";
 
-const promise = readAllFiles();
-let leetcode = [];
-promise.then((res) => {
-  leetcode.push(res)
-});
-
-
 module.exports = {
   title: "用算法娱乐身心", // 网站标题
   description: "leetcode share.", //网站描述
@@ -33,7 +26,7 @@ module.exports = {
     nav: [],
     // 侧边栏
     sidebar: {
-      "/leetcode/": leetcode,
+      "/leetcode/": readAllFiles(),
       "/vue/": getVueMenuBar(),
     },
   },
