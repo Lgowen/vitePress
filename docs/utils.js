@@ -10,7 +10,7 @@ export function readAllFiles() {
     return matchNumber(a) - matchNumber(b);
   });
 
-  const reg = /(?<=#).*?(?=#)/;
+  const reg = /(?<=#).*?(?=#)/; // 匹配 # # 中间的所有内容
 
   const children = [];
 

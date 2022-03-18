@@ -1,9 +1,9 @@
 export function getVueMenuBar() {
   return [
     {
-      text: 'Vue',
+      text: '日常学习',
       children: [
-        { text: 'vue.js设计与实现', link: '/vue/day1' }
+        { text: '随手记', link: '/study/day1' }
       ]
     },
   ]

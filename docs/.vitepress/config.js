@@ -23,11 +23,11 @@ module.exports = {
   themeConfig: {
     repo: "Lgowen", // 你的 github 仓库地址，网页的右上角会跳转
     // 头部导航
-    nav: [],
+    nav: [{ text: '剑指offer', link: '/leetcode/' }, { text: '日常学习', link: '/study/'}],
     // 侧边栏
     sidebar: {
       "/leetcode/": readAllFiles(),
-      "/vue/": getVueMenuBar(),
+      "/study/": getVueMenuBar(),
     },
   },
 };
