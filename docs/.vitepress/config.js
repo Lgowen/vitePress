@@ -14,7 +14,7 @@ module.exports = {
       "link",
       {
         rel: "icon",
-        href: "/lake.jpg", //图片放在img文件夹下
+        href: "/vitePress/lake.jpg", //图片放在img文件夹下
       },
     ],
   ],
