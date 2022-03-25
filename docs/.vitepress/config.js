@@ -9,21 +9,24 @@ module.exports = {
   base: env,
   // lang: 'en-US', //语言
   // 网页头部配置，引入需要图标，css，js
-  //   head: [
-  //     // 改变title的图标
-  //     [
-  //       "link",
-  //       {
-  //         rel: "icon",
-  //         href: "/img/linktolink.png", //图片放在public文件夹下
-  //       },
-  //     ],
-  //   ],
+  head: [
+    // 改变title的图标
+    [
+      "link",
+      {
+        rel: "icon",
+        href: "/img/lake.jpg", //图片放在public文件夹下
+      },
+    ],
+  ],
   // 主题配置
   themeConfig: {
     repo: "Lgowen", // 你的 github 仓库地址，网页的右上角会跳转
     // 头部导航
-    nav: [{ text: '剑指offer', link: '/leetcode/day1' }, { text: '日常学习', link: '/study/day1'}],
+    nav: [
+      { text: "剑指offer", link: "/leetcode/day1" },
+      { text: "日常学习", link: "/study/day1" },
+    ],
     // 侧边栏
     sidebar: {
       "/leetcode/": readAllFiles(),
