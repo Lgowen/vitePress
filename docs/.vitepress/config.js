@@ -15,7 +15,7 @@ module.exports = {
       "link",
       {
         rel: "icon",
-        href: "/img/lake.jpg", //图片放在public文件夹下
+        href: "../img/lake.jpg", //图片放在img文件夹下
       },
     ],
   ],
@@ -24,8 +24,8 @@ module.exports = {
     repo: "Lgowen", // 你的 github 仓库地址，网页的右上角会跳转
     // 头部导航
     nav: [
-      { text: "剑指offer", link: "/leetcode/day1" },
-      { text: "日常学习", link: "/study/day1" },
+      { text: "剑指offer", link: "leetcode/day1" },
+      { text: "日常学习", link: "study/day1" },
     ],
     // 侧边栏
     sidebar: {
