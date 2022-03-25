@@ -3,7 +3,7 @@ export function getVueMenuBar() {
     {
       text: '日常学习',
       children: [
-        { text: '随手记', link: '/study/day1' }
+        { text: '随手记', link: 'study/day1' }
       ]
     },
   ]
