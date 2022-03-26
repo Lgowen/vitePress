@@ -5,7 +5,7 @@ module.exports = {
   title: "用算法娱乐身心", // 网站标题
   description: "leetcode share.", //网站描述
   //   base: "/", //  部署时的路径 默认 /  可以使用二级地址 /base/
-  base: '/vitePress/',
+  base: '/vitePress/', // 在这里我与部署的站点一致 https://lgowen.github.io/vitePress 就不根据环境区分了
   // lang: 'en-US', //语言
   // 网页头部配置，引入需要图标，css，js
   head: [
@@ -14,7 +14,8 @@ module.exports = {
       "link",
       {
         rel: "icon",
-        href: "/vitePress/lake.jpg", //图片放在img文件夹下
+        href: "/vitePress/lake.jpg", //图片应该放在根目录底下的public文件夹内 踩坑半天拿不到图片
+        // 如果你的站点部署在非根URL，你需要在 .vitepress/config.js中设置base选项。例如，如果你计划部署你的站点到https://foo.github.io/bar/，base选项就应该设置为'/bar/'(始终以/开始和结尾)。
       },
     ],
   ],
