@@ -215,3 +215,55 @@ function mergeArray(arr1, arr2) {
 mergeArray([1,2,100,5,5], [2,2,2,5,0]) // [0, 1, 2, 2, 2, 5, 5, 100]
 
 ```
+
+**N叉树的前序遍历（深度优先）**
+
+```js
+var preorder = function(root) {
+    const res = [];
+    if (root == null) {
+        return res;
+    }
+
+    const stack = [];
+    stack.push(root);
+    while (stack.length) {
+        const node = stack.pop();
+        res.push(node.val);
+        for (let i = node.children.length - 1; i >= 0; --i) {
+            stack.push(node.children[i]);
+        }
+    }
+    return res;
+};
+
+```
+
+**N叉树的层序遍历（广度优先）**
+
+
+```js
+/**
+ * @param {Node|null} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+  let res = [];
+  if (root == null) return res;
+  let queue = [root];
+  while (queue.length) {
+    let size = queue.length;
+    let level = [];
+    while (size--) {
+      let cur = queue.shift();
+      level.push(cur.val);
+      for (let node of cur.children) {
+        if (node) queue.push(node);
+      }
+    }
+    res.push(level);
+  }
+  return res;
+};
+
+```
