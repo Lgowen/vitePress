@@ -267,3 +267,77 @@ var levelOrder = function (root) {
 };
 
 ```
+
+**大数相加**
+
+```js
+
+function bigNumberSum(str1, str2) {
+    // 字符串转数组且反转 从个位数开始相加
+    const arr1 = str1.split('').reverse()
+    const arr2 = str2.split('').reverse()
+
+    let flag = 0
+    const res = []
+    const len = Math.max(str1.length, str2.length)
+
+    for (let i = 0; i < len; i++) {
+        // 避免取的是undefined
+        const num1 = Number(arr1[i]) || 0
+        const num2 = Number(arr2[i]) || 0
+        let sum = num1 + num2 + flag // 两个共同位置的数相加再加上进位
+        if (sum >= 10) {
+            sum = sum % 10 // 假如大于10取余数
+            flag = 1 // 存在进位
+        } else {
+            flag = 0 // 不存在进位
+        }
+        res.push(sum)
+    }
+    if (flag) res.push(flag)
+
+    return res.reverse().join('')
+    
+}
+
+```
+
+**打家劫舍**
+
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+
+    // 假如只有一间房 那么就偷这间
+    // 假如有两间房 因为不能偷相邻的房间 那就偷两间房里钱多的那间
+    // 假如大于两间房 设它为第k间
+    // 有两个选择
+    // S(n) = Max(S(n - 2) + H(n), S(n - 1))
+    // S(0) = H(0)
+    // S(1) = Max(S(0), H(1))
+    // S(2) = Max(S(0) + H(2), S(1))
+    // S(3) = Max(S(1) + H(3), S(2))
+
+
+
+    const len = nums.length
+    if (len === 1) return nums[0]
+    if (len === 2) return Math.max(nums[0], nums[1])
+
+    let num1 = nums[0] // 前k-1
+    let num2 = Math.max(nums[0], nums[1]) // 前k-2 + k
+
+    for (let i = 2; i < len; i++) {
+        const cur = num2
+        num2 = Math.max(num1 + nums[i], num2) // 要么隔着偷 要么偷中间的 取最大值 累加
+        num1 = cur
+    }
+
+    return num2
+};
+
+```
