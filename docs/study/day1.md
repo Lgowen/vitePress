@@ -341,3 +341,99 @@ var rob = function(nums) {
 };
 
 ```
+
+**柯里化函数**
+
+```js
+function curry (fn, length = fn.length) {
+    
+    return function _curry(...args) {
+        
+        // 判断剩余参数的长度是否与fn函数所需要参数的长度相等 
+        // 相等直接返回fn函数调用结果
+        // 否则返回一个回调函数，这个回调函数返回_curry函数，传入的参数为合并当前与上一次的剩余参数
+        return args.length === length ? fn(...args) : (...arg) => _curry(...args, ...arg)
+
+    }
+}
+
+```
+
+
+**防抖**
+
+```js
+function debounce(fn, wait = 1000) {
+
+    let timer = null
+    return function() {
+        if (flag) return
+        timer = setTimeout(() => {
+           
+           fn()
+           flag = true
+        }, 1000)
+    }
+}
+
+
+function debounce(fn, wait) {
+    let timer = null
+
+    return (...args) => {
+        if (timer) {
+            clearTimeout(timer)
+            timer = null
+        }
+
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+        }, wait)
+    }
+}
+
+```
+
+
+**节流**
+
+```js
+function throttle(fn, delay) {
+    let preTime = Date.now()
+
+    return (...args) => {
+        let curTime = Date.now()
+
+        if (curTime - preTime >= delay) {
+            preTime = curTime
+            fn.apply(this, args)
+        }
+    }
+}
+
+
+```
+
+
+**深拷贝**
+
+
+```js
+
+function deepClone(target) {
+
+    if (typeof target !== 'object' || target === null) return target
+
+    const newTarget = Array.isArray(target) ? [] : {} // 判断target是一个对象还是数组
+
+    for (const key in target) {
+        if (target.hasOwnProperty(key)) {
+            newTarget[key] = deepClone(target[key])
+        }
+    }
+
+
+    return newTarget
+}
+
+```
