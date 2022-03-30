@@ -437,3 +437,162 @@ function deepClone(target) {
 }
 
 ```
+
+
+**实现一个new**
+
+```js
+
+function createObj(Fn, ...args) {
+
+    const obj = Object.create(null)
+
+    Object.setPrototypeOf(obj, Fn.prototype)
+
+    const res = Fn.apply(obj, args)
+
+    return typeof res === 'object' ? res : obj
+}
+
+```
+
+
+
+**找到树形结构中某个节点底下的所有孩子节点**
+
+
+```js
+
+function fn(tree, idValue, idKey) {
+
+    let res = []
+
+    for (let i = 0; i < tree.length; i++) {
+        res = findRoot(tree[i], idValue, idKey)
+        console.log(res, 'resss')
+        if (res) return res
+    }
+    // 首先需要找到某个节点
+    // 判断该节点是否有children
+    // 假如有则找出该节点下的所有children
+    // 否则null
+
+    return null
+}
+
+// 找到某个节点
+function findRoot(root, idValue, idKey) {
+
+    const stack = [root] // 
+
+    while (stack.length) {
+        const head = stack.pop()
+
+        if (head[idKey] === idValue) {
+            // 该keyNode底下所有children则为我要的结果
+            if (!head.children || head.children.length === 0) return null
+            return deep(head, idKey)
+        }
+
+        for (let i = head.children?.length - 1; i >= 0; i--) {
+            stack.push(head.children[i])
+        }
+    }
+
+}
+
+// 找到某个节点底下的所有children
+function deep(root, idKey) {
+    const stack = [root] // 
+
+    const res = []
+
+    let flag = false
+
+    while (stack.length) {
+        const head = stack.pop()
+
+        flag && res.push(head[idKey])
+
+        flag = true
+
+        for (let i = head.children?.length - 1; i >= 0; i--) {
+            stack.push(head.children[i])
+        }
+    }
+
+    return res
+}
+
+
+const tree = [
+    {
+        id: '1',
+        children: [
+            {
+                id: '2',
+                children: [
+                    {
+                        id: '3',
+                        children: [{id: '4'}]
+                    },
+                    {
+                        id: '5'
+                    },
+                    {
+                        id: '6',
+                        children: [{id: '7'}]
+                    }
+                ]
+            },
+            {
+                id: '8',
+                children: [{id: '9'}]
+            }
+        ]
+    }
+]
+
+console.log(fn(tree, '2', 'id'))
+
+```
+
+
+**括号匹配**
+
+
+```js
+
+function isValid(s) {
+
+    const len = s.length
+
+    if (len % 2 === 1) return false // 字符串奇数的情况
+
+    const map = new Map([
+        [')', '('],
+        ['}', '{'],
+        [']', '[']
+    ])
+
+    const stack = []
+
+    for (const str of s) {
+        // 判断是不是左括号
+        
+        if (map.has(str)) {
+            // 假如当前是右括号
+
+            if (!stack.length || stack[stack.length - 1] !== map.get(str)) return false
+
+            stack.pop()
+        } else {
+            // 假如当前是左括号
+            stack.push(str)
+        }
+    }
+
+    return !stack.length
+}
+
+````
