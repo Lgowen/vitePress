@@ -595,4 +595,53 @@ function isValid(s) {
     return !stack.length
 }
 
-````
+```
+
+
+**环形链表**
+
+```js
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    if (!head || !head.next) return false
+
+
+    // map
+    const map = new Map() // 存放已经走过的节点
+    
+    while (head.next) {
+        if (map.get(head.next)) return true 
+        // 这里有一个踩坑点 假如map记录的是节点的值的话 很有可能出现重复值 但它们是不的同节点 所以这里map存的是节点的引用
+        map.set(head, true) 
+        head = head.next
+    }
+
+    return false
+
+    // 快慢指针
+    let slow = head
+    let fast = head.next
+
+    while (fast.next && fast.next.next) {
+        slow = slow.next
+        fast = fast.next.next
+
+        if (slow === fast) return true
+    }
+
+    return false
+};
+
+```
