@@ -1,33 +1,36 @@
 const fs = require("fs");
 const path = require("path");
 
-const leetcodePath = path.resolve("./docs/leetcode");
+export function readAllFiles(path, isNeedSort = false) {
 
-export function readAllFiles() {
-  const files = getFileNames(leetcodePath);
+  const files = getFileNames(path);
 
-  files.sort((a, b) => {
-    return matchNumber(a) - matchNumber(b);
-  });
+  if (isNeedSort) {
+    files.sort((a, b) => {
+      return matchNumber(a) - matchNumber(b);
+    });
+  }
 
   const reg = /(?<=#).*?(?=#)/; // 匹配 # # 中间的所有内容
 
   const children = [];
 
+  const pathName = path.substring(path.lastIndexOf('/') + 1, path.length)
+
   files.forEach((fileName) => {
-    const content = getFileInfo(leetcodePath, fileName);
+    const content = getFileInfo(path, fileName);
 
     const name = content.match(reg)[0];
 
     children.push({
       text: name,
-      link: `/leetcode/${fileName.split(".")[0]}`,
+      link: `/${pathName}/${fileName.split(".")[0]}`,
     });
+
   });
 
-
   return [{
-      text: 'LeetCode',
+      text: `${pathName}`,
       children
   }]
 }

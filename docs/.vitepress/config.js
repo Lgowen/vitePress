@@ -1,5 +1,5 @@
-import { getVueMenuBar } from "./menu";
 import { readAllFiles } from "../utils";
+import { leetcodePath, studyPath } from "../contant" 
 
 module.exports = {
   title: "用算法娱乐身心", // 网站标题
@@ -29,8 +29,8 @@ module.exports = {
     ],
     // 侧边栏
     sidebar: {
-      "/leetcode/": readAllFiles(),
-      "/study/": getVueMenuBar(),
+      "/leetcode/": readAllFiles(leetcodePath, true),
+      "/study/": readAllFiles(studyPath),
     },
   },
 };
