@@ -162,6 +162,33 @@ function longestPalindrome(s) {
     return s.substring(resLeft, resRight + 1); // 截取字符串
 };
 
+function longestPalindrome(s) {
+    let left = 0
+    let right = 0
+
+    for (let i = 0; i < s.length; i++) {
+        findMaxStr(i, i) // 奇数
+        findMaxStr(i, i + 1) // 偶数
+    }
+
+    function findMaxStr(i, j) {
+
+        while (i >= 0 && j < s.length && s[i] === s[j]) {
+            i--;
+            j++
+        }
+        
+        // 当前i 和 j终止的地方比上一次长的话就替换指针位置
+        if (j - i - 1 > right - left - 1) {
+            left = i
+            right = j
+        }
+
+    }
+
+    return s.slice(left + 1, right) // 裁剪字符串
+};
+
 ```
 
 

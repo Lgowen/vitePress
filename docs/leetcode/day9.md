@@ -22,11 +22,12 @@
 // dp[n] = nums[i] (dp[n - 1] <= 0)
 var maxSubArray = function(nums) {  
     let maxSum = nums[0] // 初始化最大值 取dp[0]
+    let preSum = nums[0]
     const len = nums.length // 获取dp长度
     for (let i = 1; i < len; i++) {
-        const preSum = nums[i - 1] // 获取dp[n - 1]的值
-        preSum > 0 && (nums[i] += preSum) // 假如前n - 1的连续和最大值为负数时 则继续相加当前位是没有意义的 否则才继续相加
-        maxSum = Math.max(maxSum, nums[i]) // 取前一次的最大值与本次的最大值中较大的那个值
+        preSum = Math.max(preSum + nums[i], nums[i]) 
+        //  preSum = preSum < 0 ? nums[i] : preSum + nums[i]
+        maxSum = Math.max(maxSum, preSum) // 取前一次的最大值与本次的最大值中较大的那个值
     }
 
     return maxSum // 返回该值

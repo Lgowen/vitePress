@@ -49,6 +49,5 @@ function getFileNames(dirFilePath) {
 
 function getFileInfo(dirFilePath, fileName) {
   const fileDir = path.join(dirFilePath, fileName);
-
   return fs.readFileSync(fileDir, "utf-8");
 }
