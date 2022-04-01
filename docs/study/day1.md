@@ -445,9 +445,7 @@ function deepClone(target) {
 
 function createObj(Fn, ...args) {
 
-    const obj = Object.create(null)
-
-    Object.setPrototypeOf(obj, Fn.prototype)
+    const obj = Object.create(Fn.prototype)
 
     const res = Fn.apply(obj, args)
 
