@@ -1,5 +1,5 @@
 import { readAllFiles } from "../utils";
-import { leetcodePath, studyPath } from "../contant" 
+import { leetcodePath, studyPath, vuePath } from "../contant" 
 
 module.exports = {
   title: "用算法娱乐身心", // 网站标题
@@ -26,11 +26,13 @@ module.exports = {
     nav: [
       { text: "剑指offer", link: "leetcode/day1" },
       { text: "日常学习", link: "study/day1" },
+      { text: 'vue', link: "vue/v-model"}
     ],
     // 侧边栏
     sidebar: {
       "/leetcode/": readAllFiles(leetcodePath, true),
       "/study/": readAllFiles(studyPath),
+      "/vue/": readAllFiles(vuePath)
     },
   },
 };
