@@ -122,6 +122,36 @@ function myPromiseRace(PromiseArr) {
 
 ```
 
+**Promise.allSettled**
+
+```js
+
+function myPromiseAllSettled(PromiseArr) {
+    return new Promise((resolve, reject) => {
+        let count = 0
+        const arr = []
+        const len = PromiseArr.length
+        const isTimeToResolve = () => {
+            if (count === len) resolve(arr)
+        }
+
+        PromiseArr.forEach((promise, index) => {
+            Promise.resolve(promise).then(res => {
+                arr[index] = { status: 'fulfilled', value: res }
+                count++
+                isTimeToResolve()
+            }, err => {
+                arr[index] = { status: 'rejected', reason: err }
+                count++
+                isTimeToResolve()
+            })
+        })
+    })
+}
+
+```
+
+
 **实现myFetch在请求timeout后没结果没回来报错**
 
 ```js
