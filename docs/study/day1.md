@@ -114,7 +114,8 @@ function myPromiseAll(PromiseArr) {
 function myPromiseRace(PromiseArr) {
     return new Promise((resolve, reject) => {
         PromiseArr.forEach(promise => {
-            Promise.resolve(promise).then(res => resolve(res))
+            Promise.resolve(promise).then(resolve, reject)
+            // Promise.resolve(promise).then(res => resolve(res), err => reject(err))
         })
     })
 }
