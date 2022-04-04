@@ -64,6 +64,7 @@ function trigger(target, key) {
     effects && effects.forEach(fn => {
         // 避免副作用函数嵌套导致无限循环
         // 如果当前触发的副作用函数与当前激活的副作用函数相同的话，则不重复触发，避免无限递归调用，导致栈溢出
+        // effect(() => proxyData.age++) 避免该情况
         if (fn !== activeffect) {
             newEffects.add(fn)
         }
