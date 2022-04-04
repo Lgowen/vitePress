@@ -1,7 +1,5 @@
 # vue学习 #
 
-
-
 ```vue
 <!-- index.vue -->
 <template>
