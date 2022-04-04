@@ -241,3 +241,59 @@ console.log(7)
 // 开始第三轮
 // 1. 从宏任务队列中取出定时器2 执行打印2
 ```
+
+
+**全排列**
+
+```js
+// 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+
+// 示例 1：
+
+// 输入：nums = [1,2,3]
+// 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+// 示例 2：
+
+// 输入：nums = [0,1]
+// 输出：[[0,1],[1,0]]
+// 示例 3：
+
+// 输入：nums = [1]
+// 输出：[[1]]
+
+
+const permute = (nums) => {
+    const res = [] // 存放结果
+    const track = [] // 存放每一条路径
+    backTrack(track, nums)
+
+    function backTrack(track) {
+        // 假如路径长度与nums长度相同 则该条路径寻找完毕
+        if (track.length === nums.length) {
+            res.push(track.slice()) // 因为用的是同一个track 所以当符合要求时推入结果数组中的应该是一个副本 不然该引用值在一直改变 最后得到的全是空的列表
+            // 由始至终track只有一份 深度优先遍历回到根节点成为空列表
+            return
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+            
+            // 假如当前路径存在该值(避免重复选择)
+            // 没有显示记录选择列表
+            if (track.includes(nums[i])) {
+                continue
+            }
+            // 做选择
+            track.push(nums[i]) // 选择当前的节点
+
+            backTrack(track) // 回溯路径
+
+            track.pop()
+            // 撤销选择
+        }
+
+    }
+
+    return res // 返回结果
+};
+
+```
