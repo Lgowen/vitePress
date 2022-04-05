@@ -25,6 +25,10 @@ const proxyData = new Proxy(data, {
 
 const bucket = new WeakMap() // 桶 -> 存放target中每一个属性及其对应所有依赖
 
+// WeakMap经常用于存储那些只有当key所引用的对象存在时(没有被回收)才有价值的信息。
+// 如果target对象没有任何引用了，说明用户侧不再需要它了，这时垃圾回收器会完成回收任务。
+// 但是如果使用Map来代替WeakMap，那么即使用户侧的代码对target没有任何引用，这个target也不会被回收，最终可能导致内存溢出
+
 // 追踪响应式数据(收集依赖)
 // WeakMap: {
 //     name: new Map() -> new Set() -> key --- effentFn1 effentFn2

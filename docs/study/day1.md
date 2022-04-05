@@ -451,15 +451,24 @@ function throttle(fn, delay) {
 
 ```js
 
-function deepClone(target) {
+// 用WeakMap而不是Map的原因
+// Map是强引用
+// WeakMap是弱引用
+// 被弱引用的对象可以在任何时候被回收，而对于强引用来说，只要这个强引用还在，那么对象无法被回收。拿上面的例子说，map 和 a一直是强引用的关系， 在程序结束之前，a 所占的内存空间一直不会被释放。
+
+function deepClone(target, map = new WeakMap()) {
+
+    if (map.get(target)) return target // 解决循环引用 假如保存过了就直接用就行了 放置栈溢出
 
     if (typeof target !== 'object' || target === null) return target
+
+    map.set(target, true)
 
     const newTarget = Array.isArray(target) ? [] : {} // 判断target是一个对象还是数组
 
     for (const key in target) {
         if (target.hasOwnProperty(key)) {
-            newTarget[key] = deepClone(target[key])
+            newTarget[key] = deepClone(target[key], map)
         }
     }
 
@@ -663,7 +672,7 @@ var hasCycle = function(head) {
     let slow = head
     let fast = head.next
 
-    while (fast.next && fast.next.next) {
+    while (fast.next.next) {
         slow = slow.next
         fast = fast.next.next
 
@@ -676,7 +685,7 @@ var hasCycle = function(head) {
 ```
 
 
-****
+**写一个函数解析a.b.c的值**
 
 ```js
 /**
