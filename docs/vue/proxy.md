@@ -306,3 +306,65 @@ effect(() => {
 //     -----------value
 //                  ----------effectFn
 ```
+
+
+
+**watch**
+
+```js
+
+const obj = new Proxy({ age: 18 }, /* ... */)
+
+watch(obj, (newValue, oldValue) => {
+    console.log('obj中的值变化了')
+})
+
+// 上面的watch方法其实是想监听obj的所有属性，也可以是一个getter函数监听响应式数据中的某一个值的变化，从而执行回调函数，且回调函数中可以拿到新的值和旧的值
+
+function watch(source, cb) {
+
+    let getter
+    
+    // 假如source是一个函数
+    if (typeof source === 'function') {
+        getter = source
+    } else {
+        getter = () => traverse(source) // 递归读取该对象的每一个值(这里暂时不考虑数组的情况) 触发值的getter收集(track)依赖
+    }
+
+
+    let newValue, oldValue
+
+
+    const effectFn = effect(() => getter(), {
+        lazy: true, // 设置lazy可以使的该副作用函数不立刻执行 可用于自行执行 并且获取副作用函数的返回值(getter的返回值)
+        // 在source中的所有值只要发生变化时，则会触发其getter执行(trigger)对应的副作用函数(并且执行调度方法)scheduler
+        scheduler() {
+
+            newValue = effectFn() // 在source变化时触发获取新的值
+
+            cb(newValue, oldValue) // 执行回调函数并且传值
+
+            oldValue = newValue // 执行完回调函数之后 更新oldValue的值 以保证下一次拿到的数据是正确的
+        }
+    })
+
+    oldValue = effectFn() // 首次执行获取getter的值
+}
+
+function traverse(source, seen = new Set()) {
+
+    // 假如该值是一个基本数据类型或者已经读过了(用Set存储避免循环引用) 就不需要继续读了
+    if (typeof source !=== 'object' || source === null || seen.has(source)) return 
+    
+    seen.add(source) // 存取读过的属性
+
+    // 递归读取每一个属性
+    for (const key in source) {
+        traverse(source[key], seen)
+    }
+
+    return source
+}
+
+```
