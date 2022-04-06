@@ -43,3 +43,45 @@ const findRoot = (root, p, q) => {
 // 空间复杂度: O(n)  N为二叉树的节点数
 
 ```
+
+
+**543. 二叉树的直径**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var diameterOfBinaryTree = function(root) {
+    let maxLength = 0
+    
+    function dfs(root) {
+        if (!root) return 0
+        
+        let leftMaxLength = dfs(root.left)
+
+        let rightMaxLength = dfs(root.right)
+
+        maxLength = Math.max(maxLength, leftMaxLength + rightMaxLength) // 最后返回的长度为左子树的最大深度+右子树的最大深度
+
+        return Math.max(leftMaxLength, rightMaxLength) + 1 // 从最底层往上加 每一层加1 取左子树和右子树较深的那一个作为该root的最大深度
+    }
+    
+    dfs(root)
+    
+    return maxLength
+};
+
+// 时间复杂度: O(n)  N为二叉树的节点数
+// 空间复杂度: O(Height)  Height为二叉树的深度
+
+
+```

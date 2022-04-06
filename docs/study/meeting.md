@@ -1,4 +1,4 @@
-# 面试题 #
+# 学习之路 #
 
 **3. 无重复字符的最长子串**
 
@@ -191,58 +191,6 @@ function longestPalindrome(s) {
 
 ```
 
-
-**事件循环**
-
-```js
-
-setTimeout(() => {
-    Promise.resolve().then(() => {
-		console.log(88)
-	})
-    console.log(1)
-}, 1)
-
-setTimeout(() => {
-    console.log(2)
-}, 0)
-
-Promise.resolve(() => {
-	console.log(3)
-    return 5
-}).then((val) => {
-   console.log(4, val)
-    return 6
-}).catch(() => {
-    console.log(5)
-}).finally((val) => {
-    console.log(6, val)
-})
-
-console.log(7)
-
-// 由于不同浏览器的最低延迟时间不同，以上的定时器执行顺序也有可能不同 （chrome和Safari的最小延迟为1ms，firefox和ie的最小延迟是0）
-// 这也解释了为什么在chrome浏览器下 以上的两个定时器会先打印1 而不是2
-
-// Promise.resolve(() => { console.log(3); return 5}) Promise.resolve了一个函数 所以在.then(val => console.log(4, val); return 6) 这里接收到的val是其resolve的函数
-// 1. Promise.resolve() -> 将promise的状态从pending改为fullfilled 因此会将.then()中的回调注册事件队列中去（微任务）
-// 2. 主执行栈console.log(7) -> 打印7
-// 3. 此时执行栈为空 故从任务队列中看是否有等待被放入执行栈中执行的微任务 
-// 4. 拿出第一个任务：.then中的回调函数 打印 4 (() => console.log(3); return 5) 执行完后会将.finally()中的回调放入微任务队列中 tips: finally中的回调函数没有形参
-// 5. 此时执行栈为空 从微任务队列中取出.finally()中的回调函数 -> 打印 6 undefined 
-// 6. 这时候微任务队列中也为空 即本轮事件循环结束
-
-// 开始第二轮
-// 1. 从宏任务队列中取出定时器1，Promise.resolve().then() 将其回调函数注册进入微任务队列
-// 2. 打印1
-// 3. 执行栈为空 任务队列中存在微任务 取其出来执行 打印88
-// 4. 执行栈为空 微任务队列为空 该轮事件循环结束
-
-// 开始第三轮
-// 1. 从宏任务队列中取出定时器2 执行打印2
-```
-
-
 **全排列**
 
 ```js
@@ -270,7 +218,7 @@ const permute = (nums) => {
     function backTrack(track) {
         // 假如路径长度与nums长度相同 则该条路径寻找完毕
         if (track.length === nums.length) {
-            res.push(track.slice()) // 因为用的是同一个track 所以当符合要求时推入结果数组中的应该是一个副本 不然该引用值在一直改变 最后得到的全是空的列表
+            res.push(track.slice()) // 因为用的是同一个track(引用值) 所以当符合要求时推入结果数组中的应该是一个副本 不然该引用值在一直改变 最后得到的全是空的列表
             // 由始至终track只有一份 深度优先遍历回到根节点成为空列表
             return
         }

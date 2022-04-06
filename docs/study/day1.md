@@ -1,49 +1,5 @@
 # 随手记 #
 
-**如何用 Promise 实现红绿黄灯交替打印**
-
-```js
-// 红灯3秒打印一次，黄灯2秒打印一次，绿灯1秒打印一次
-function green() {
-  console.log("green");
-}
-
-function yellow() {
-  console.log("yellow");
-}
-
-function red() {
-  console.log("red");
-}
-
-function colorPrint() {
-  Promise.resolve()
-    .then(() => {
-      return mySetTimeout(red, 3000); //
-    })
-    .then(() => {
-      return mySetTimeout(green, 1000); //
-    })
-    .then(() => {
-      return mySetTimeout(yellow, 2000); //
-    })
-    .then(() => {
-      return colorPrint(); // 最后递归执行
-    });
-}
-
-function mySetTimeout(cb, timeout) {
-  return new Promise((resolve, _) => {
-    setTimeout(() => {
-      cb(); // 执行回调
-      resolve(); // 让promise的状态从pending -> fulfilled
-    }, timeout);
-  });
-}
-
-colorPrint();
-```
-
 **全排列**
 
 ```js
@@ -80,91 +36,6 @@ fullArrangement([
   ["b1", "b2"],
   ["c1", "c2"],
 ]);
-```
-
-**Promise.all**
-
-```js
-function myPromiseAll(PromiseArr) {
-  return new Promise((resolve, reject) => {
-    const asnArr = []; // promise.all返回的结果 -> 存储PromiseArr中的所有promise成功或其中一个失败的结果
-    let count = 0; // 负责计数 -> 当PromiseArr中所有的promise执行完毕后将res返回
-    const len = PromiseArr.length; // 
-    
-    // 遍历数组执行每一个promise -> 将每个返回的结果放进asnArr中 -> 每放入一个计一个数 -> 当全部结果都返回完毕时resolve(asnArr)
-    PromiseArr.forEach((promise) => {
-      Promise.resolve(promise)
-        .then(res => {
-          asnArr[count] = res;
-          count++;
-          if (count === len) resolve(asnArr);
-        }, err => {
-            reject(err);
-        })
-    });
-  });
-}
-```
-
-
-**Promise.race**
-
-```js
-
-function myPromiseRace(PromiseArr) {
-    return new Promise((resolve, reject) => {
-        PromiseArr.forEach(promise => {
-            Promise.resolve(promise).then(resolve, reject)
-            // Promise.resolve(promise).then(res => resolve(res), err => reject(err))
-        })
-    })
-}
-
-```
-
-**Promise.allSettled**
-
-```js
-
-function myPromiseAllSettled(PromiseArr) {
-    return new Promise((resolve, reject) => {
-        let count = 0
-        const arr = []
-        const len = PromiseArr.length
-        const isTimeToResolve = () => {
-            if (count === len) resolve(arr)
-        }
-
-        PromiseArr.forEach((promise, index) => {
-            Promise.resolve(promise).then(res => {
-                arr[index] = { status: 'fulfilled', value: res }
-                count++
-                isTimeToResolve()
-            }, err => {
-                arr[index] = { status: 'rejected', reason: err }
-                count++
-                isTimeToResolve()
-            })
-        })
-    })
-}
-
-```
-
-
-**实现myFetch在请求timeout后没结果没回来报错**
-
-```js
-
-function myFetch(timeout, params) {
-    return Promise.race([new Promise((_, reject) => {
-        setTimeout(() => {
-            reject('error')
-        }, timeout)
-    }), fetch(params)])
-}
-
-
 ```
 
 **寻找驼峰数字**
@@ -709,5 +580,65 @@ export function parsePath (path) {
     return obj
   }
 }
+
+```
+
+
+**2.两数相加**
+
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    let head = null
+    let tail = null
+
+    let carry = 0
+
+    while (l1 || l2) {
+        
+        const val1 = l1 ? l1.val : 0 // 判空处理
+        const val2 = l2 ? l2.val : 0
+
+        const sum = val1 + val2 + carry
+        
+        if (!head) {
+            head = tail = new ListNode(sum % 10) // 初始化
+        } else {
+            tail.next = new ListNode(sum % 10) // 指针移动
+            tail = tail.next
+        }
+
+        carry = Math.floor(sum / 10) // 拿进位 carry = sum > 10 ? 1 : 0
+        
+        if (l1) {
+            l1 = l1.next
+        }
+        
+        if (l2) {
+            l2 = l2.next
+        }
+    }
+
+    if (carry > 0) {
+        tail.next = new ListNode(carry) // 如果遍历结束还有进位的话 新建一个节点
+    }
+
+    return head
+};
+
+// 时间复杂度: O(max(m, n)) 两个链表长度较大值
+// 空间复杂度: O(1)  只用了常数项个空间存储 head tail carry
 
 ```
