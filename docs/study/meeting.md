@@ -245,3 +245,352 @@ const permute = (nums) => {
 };
 
 ```
+
+
+
+**N叉树的前序遍历（深度优先）**
+
+```js
+var preorder = function(root) {
+    const res = [];
+    if (root == null) {
+        return res;
+    }
+
+    const stack = [];
+    stack.push(root);
+    while (stack.length) {
+        const node = stack.pop();
+        res.push(node.val);
+        for (let i = node.children.length - 1; i >= 0; --i) {
+            stack.push(node.children[i]);
+        }
+    }
+    return res;
+};
+
+```
+
+**N叉树的层序遍历（广度优先）**
+
+
+```js
+/**
+ * @param {Node|null} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+  let res = [];
+  if (root == null) return res;
+  let queue = [root];
+  while (queue.length) {
+    let size = queue.length;
+    let level = [];
+    while (size--) {
+      let cur = queue.shift();
+      level.push(cur.val);
+      for (let node of cur.children) {
+        if (node) queue.push(node);
+      }
+    }
+    res.push(level);
+  }
+  return res;
+};
+
+```
+
+**大数相加**
+
+```js
+
+function bigNumberSum(str1, str2) {
+    // 字符串转数组且反转 从个位数开始相加
+    const arr1 = str1.split('').reverse()
+    const arr2 = str2.split('').reverse()
+
+    let flag = 0
+    const res = []
+    const len = Math.max(str1.length, str2.length)
+
+    for (let i = 0; i < len; i++) {
+        // 避免取的是undefined
+        const num1 = Number(arr1[i]) || 0
+        const num2 = Number(arr2[i]) || 0
+        let sum = num1 + num2 + flag // 两个共同位置的数相加再加上进位
+        if (sum >= 10) {
+            sum = sum % 10 // 假如大于10取余数
+            flag = 1 // 存在进位
+        } else {
+            flag = 0 // 不存在进位
+        }
+        res.push(sum)
+    }
+    if (flag) res.push(flag)
+
+    return res.reverse().join('')
+    
+}
+
+```
+
+**打家劫舍**
+
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+
+    // 假如只有一间房 那么就偷这间
+    // 假如有两间房 因为不能偷相邻的房间 那就偷两间房里钱多的那间
+    // 假如大于两间房 设它为第k间
+    // 有两个选择
+    // S(n) = Max(S(n - 2) + H(n), S(n - 1))
+    // S(0) = H(0)
+    // S(1) = Max(S(0), H(1))
+    // S(2) = Max(S(0) + H(2), S(1))
+    // S(3) = Max(S(1) + H(3), S(2))
+
+
+
+    const len = nums.length
+    if (len === 1) return nums[0]
+    if (len === 2) return Math.max(nums[0], nums[1])
+
+    let num1 = nums[0] // 前k-1
+    let num2 = Math.max(nums[0], nums[1]) // 前k-2 + k
+
+    for (let i = 2; i < len; i++) {
+        const cur = num2
+        num2 = Math.max(num1 + nums[i], num2) // 要么隔着偷 要么偷中间的 取最大值 累加
+        num1 = cur
+    }
+
+    return num2
+};
+
+```
+
+
+
+**括号匹配**
+
+
+```js
+
+function isValid(s) {
+
+    const len = s.length
+
+    if (len % 2 === 1) return false // 字符串奇数的情况
+
+    const map = new Map([
+        [')', '('],
+        ['}', '{'],
+        [']', '[']
+    ])
+
+    const stack = []
+
+    for (const str of s) {
+        // 判断是不是左括号
+        
+        if (map.has(str)) {
+            // 假如当前是右括号
+
+            if (!stack.length || stack[stack.length - 1] !== map.get(str)) return false
+
+            stack.pop()
+        } else {
+            // 假如当前是左括号
+            stack.push(str)
+        }
+    }
+
+    return !stack.length
+}
+
+```
+
+
+**环形链表**
+
+```js
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    if (!head || !head.next) return false
+
+
+    // map
+    const map = new Map() // 存放已经走过的节点
+    
+    while (head.next) {
+        if (map.get(head.next)) return true 
+        // 这里有一个踩坑点 假如map记录的是节点的值的话 很有可能出现重复值 但它们是不的同节点 所以这里map存的是节点的引用
+        map.set(head, true) 
+        head = head.next
+    }
+
+    return false
+
+    // 快慢指针
+    let slow = head
+    let fast = head.next
+
+    while (fast.next.next) {
+        slow = slow.next
+        fast = fast.next.next
+
+        if (slow === fast) return true
+    }
+
+    return false
+};
+
+```
+
+
+
+
+**236. 二叉树的最近公共祖先**
+
+```js
+
+// 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
+
+// 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function(root, p, q) {
+    return findRoot(root, p, q)
+};
+
+const findRoot = (root, p, q) => {
+    //
+    if (!root) return null
+
+    if (root === p || root === q) return root // 假如有一个节点的值跟目标值相同的话 可以证明节点就是最近公共祖先了
+
+    const left = findRoot(root.left, p, q) // 从左子树去找
+    const right = findRoot(root.right, p, q) // 从右子树去找
+
+    if (left && right) return root // 如果该节点的左子树存在目标值 右子树也存在目标值 则该节点是最近公共祖先
+
+    return left ? left : right // 假如左右子树只存在其中一个值的话 就返回存在的那个节点即是唯一公共祖先了 否则就是没有公共祖先就是null
+}
+
+// 时间复杂度: O(n)  N为二叉树的节点数
+// 空间复杂度: O(n)  N为二叉树的节点数
+
+```
+
+
+**543. 二叉树的直径**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var diameterOfBinaryTree = function(root) {
+    let maxLength = 0
+    
+    function dfs(root) {
+        if (!root) return 0
+        
+        let leftMaxLength = dfs(root.left)
+
+        let rightMaxLength = dfs(root.right)
+
+        maxLength = Math.max(maxLength, leftMaxLength + rightMaxLength) // 最后返回的长度为左子树的最大深度+右子树的最大深度
+
+        return Math.max(leftMaxLength, rightMaxLength) + 1 // 从最底层往上加 每一层加1 取左子树和右子树较深的那一个作为该root的最大深度
+    }
+    
+    dfs(root)
+    
+    return maxLength
+};
+
+// 时间复杂度: O(n)  N为二叉树的节点数
+// 空间复杂度: O(Height)  Height为二叉树的深度
+
+
+```
+
+
+**二叉树的最大深度**
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if (!root) return 0
+
+    return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1
+    // let max = 0
+    // findDepth(root)
+    
+    // function findDepth(root) {
+    //     if (!root) return 0
+
+    //     const left = findDepth(root.left)
+
+    //     const right = findDepth(root.right)
+
+    //     const middleMax = Math.max(left, right)
+        
+    //     max = Math.max(max, middleMax)
+
+    //     return Math.max(left, right) + 1
+    // }
+
+    // return max + 1
+};
+
+```

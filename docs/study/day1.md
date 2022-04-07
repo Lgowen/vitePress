@@ -118,132 +118,6 @@ mergeArray([1,2,100,5,5], [2,2,2,5,0]) // [0, 1, 2, 2, 2, 5, 5, 100]
 
 ```
 
-**N叉树的前序遍历（深度优先）**
-
-```js
-var preorder = function(root) {
-    const res = [];
-    if (root == null) {
-        return res;
-    }
-
-    const stack = [];
-    stack.push(root);
-    while (stack.length) {
-        const node = stack.pop();
-        res.push(node.val);
-        for (let i = node.children.length - 1; i >= 0; --i) {
-            stack.push(node.children[i]);
-        }
-    }
-    return res;
-};
-
-```
-
-**N叉树的层序遍历（广度优先）**
-
-
-```js
-/**
- * @param {Node|null} root
- * @return {number[][]}
- */
-var levelOrder = function (root) {
-  let res = [];
-  if (root == null) return res;
-  let queue = [root];
-  while (queue.length) {
-    let size = queue.length;
-    let level = [];
-    while (size--) {
-      let cur = queue.shift();
-      level.push(cur.val);
-      for (let node of cur.children) {
-        if (node) queue.push(node);
-      }
-    }
-    res.push(level);
-  }
-  return res;
-};
-
-```
-
-**大数相加**
-
-```js
-
-function bigNumberSum(str1, str2) {
-    // 字符串转数组且反转 从个位数开始相加
-    const arr1 = str1.split('').reverse()
-    const arr2 = str2.split('').reverse()
-
-    let flag = 0
-    const res = []
-    const len = Math.max(str1.length, str2.length)
-
-    for (let i = 0; i < len; i++) {
-        // 避免取的是undefined
-        const num1 = Number(arr1[i]) || 0
-        const num2 = Number(arr2[i]) || 0
-        let sum = num1 + num2 + flag // 两个共同位置的数相加再加上进位
-        if (sum >= 10) {
-            sum = sum % 10 // 假如大于10取余数
-            flag = 1 // 存在进位
-        } else {
-            flag = 0 // 不存在进位
-        }
-        res.push(sum)
-    }
-    if (flag) res.push(flag)
-
-    return res.reverse().join('')
-    
-}
-
-```
-
-**打家劫舍**
-
-
-```js
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var rob = function(nums) {
-
-    // 假如只有一间房 那么就偷这间
-    // 假如有两间房 因为不能偷相邻的房间 那就偷两间房里钱多的那间
-    // 假如大于两间房 设它为第k间
-    // 有两个选择
-    // S(n) = Max(S(n - 2) + H(n), S(n - 1))
-    // S(0) = H(0)
-    // S(1) = Max(S(0), H(1))
-    // S(2) = Max(S(0) + H(2), S(1))
-    // S(3) = Max(S(1) + H(3), S(2))
-
-
-
-    const len = nums.length
-    if (len === 1) return nums[0]
-    if (len === 2) return Math.max(nums[0], nums[1])
-
-    let num1 = nums[0] // 前k-1
-    let num2 = Math.max(nums[0], nums[1]) // 前k-2 + k
-
-    for (let i = 2; i < len; i++) {
-        const cur = num2
-        num2 = Math.max(num1 + nums[i], num2) // 要么隔着偷 要么偷中间的 取最大值 累加
-        num1 = cur
-    }
-
-    return num2
-};
-
-```
-
 **柯里化函数**
 
 ```js
@@ -369,14 +243,57 @@ function deepClone(target, map = new WeakMap()) {
 
 ```js
 
+function Person() {
+
+    return {
+        name: 'lgowen'
+    }
+}
+
+// 这里的Person可以当作以下函数的Fn
+
 function createObj(Fn, ...args) {
 
     const obj = Object.create(Fn.prototype)
 
-    const res = Fn.apply(obj, args)
+    const res = Fn.apply(obj, args) // 获取该构造函数执行的返回结果
 
-    return typeof res === 'object' ? res : obj
+    return (typeof res === 'object' && res !== null ) ? res : obj // 如果有返回结果且是对象的话就用函数返回值 否则默认返回内部生成的对象
 }
+
+```
+
+
+**实现一个instanceof**
+<!-- instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上 -->
+
+```js
+
+function Person() {}
+
+const person = new Person()
+
+// 判断Person的原型是否在person的原型链上
+
+// console.log(person instanceof Person) // true
+
+function myInstanceof(obj, Constructor) {
+
+    let proto1 = Object.getPrototypeOf(obj) // 获取obj的原型
+
+    const proto2 = Constructor.prototype // 获取constructor的原型
+
+    while (proto1) {
+        if (proto1 === proto2) {
+            return true
+        } else {
+            proto1 = Object.getPrototypeOf(proto1)
+        }
+    }
+
+    return false
+}
+
 
 ```
 
@@ -481,96 +398,6 @@ console.log(fn(tree, '2', 'id'))
 
 ```
 
-
-**括号匹配**
-
-
-```js
-
-function isValid(s) {
-
-    const len = s.length
-
-    if (len % 2 === 1) return false // 字符串奇数的情况
-
-    const map = new Map([
-        [')', '('],
-        ['}', '{'],
-        [']', '[']
-    ])
-
-    const stack = []
-
-    for (const str of s) {
-        // 判断是不是左括号
-        
-        if (map.has(str)) {
-            // 假如当前是右括号
-
-            if (!stack.length || stack[stack.length - 1] !== map.get(str)) return false
-
-            stack.pop()
-        } else {
-            // 假如当前是左括号
-            stack.push(str)
-        }
-    }
-
-    return !stack.length
-}
-
-```
-
-
-**环形链表**
-
-```js
-
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
-var hasCycle = function(head) {
-    if (!head || !head.next) return false
-
-
-    // map
-    const map = new Map() // 存放已经走过的节点
-    
-    while (head.next) {
-        if (map.get(head.next)) return true 
-        // 这里有一个踩坑点 假如map记录的是节点的值的话 很有可能出现重复值 但它们是不的同节点 所以这里map存的是节点的引用
-        map.set(head, true) 
-        head = head.next
-    }
-
-    return false
-
-    // 快慢指针
-    let slow = head
-    let fast = head.next
-
-    while (fast.next.next) {
-        slow = slow.next
-        fast = fast.next.next
-
-        if (slow === fast) return true
-    }
-
-    return false
-};
-
-```
-
-
 **写一个函数解析a.b.c的值**
 
 ```js
@@ -598,116 +425,6 @@ export function parsePath (path) {
 
 ```
 
-
-**2.两数相加**
-
-
-```js
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
-/**
- * @param {ListNode} l1
- * @param {ListNode} l2
- * @return {ListNode}
- */
-var addTwoNumbers = function(l1, l2) {
-    let head = null
-    let tail = null
-
-    let carry = 0
-
-    while (l1 || l2) {
-        
-        const val1 = l1 ? l1.val : 0 // 判空处理
-        const val2 = l2 ? l2.val : 0
-
-        const sum = val1 + val2 + carry
-        
-        if (!head) {
-            head = tail = new ListNode(sum % 10) // 初始化
-        } else {
-            tail.next = new ListNode(sum % 10) // 指针移动
-            tail = tail.next
-        }
-
-        carry = Math.floor(sum / 10) // 拿进位 carry = sum > 10 ? 1 : 0
-        
-        if (l1) {
-            l1 = l1.next
-        }
-        
-        if (l2) {
-            l2 = l2.next
-        }
-    }
-
-    if (carry > 0) {
-        tail.next = new ListNode(carry) // 如果遍历结束还有进位的话 新建一个节点
-    }
-
-    return head
-};
-
-// 时间复杂度: O(max(m, n)) 两个链表长度较大值
-// 空间复杂度: O(1)  只用了常数项个空间存储 head tail carry
-
-```
-
-
-**300. 最长递增子序列**
-
-```js
-// 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
-
-// 子序列 是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序。例如，[3,6,2,7] 是数组 [0,3,1,6,2,2,7] 的子序列。
-//  
-// 示例 1：
-
-// 输入：nums = [10,9,2,5,3,7,101,18]
-// 输出：4
-// 解释：最长递增子序列是 [2,3,7,101]，因此长度为 4 。
-// 示例 2：
-
-// 输入：nums = [0,1,0,3,2,3]
-// 输出：4
-// 示例 3：
-
-// 输入：nums = [7,7,7,7,7,7,7]
-// 输出：1
-
-
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var lengthOfLIS = function(nums) {
-    const len = nums.length
-
-    if (!len) return
-
-    const dp = Array(len).fill(1) // 初始化dp数组 存放的是以i结尾的最大子序列长度
-
-    for (let i = 1; i < len; i++) {
-        for (let j = 0; j < i; j++) {
-            if (nums[j] < nums[i]) {
-                dp[i] = Math.max(dp[i], dp[j] + 1) // 每次循环 假如当前的数字比其前面的数字大的话 那么以该数字的结尾的最大长度应该是 上一个比它小的值结尾的最大长度值+1
-            }
-        }
-    }
-
-    return Math.max(...dp) // 取最大的值
-};
-
-
-// 时间复杂度: O(N * N) 两层嵌套循环
-// 空间复杂度: O(N) 用了dp数组
-
-```
 
 **图片懒加载优化**
 
