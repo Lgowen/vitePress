@@ -265,20 +265,6 @@ function curry (fn, length = fn.length) {
 **防抖**
 
 ```js
-function debounce(fn, wait = 1000) {
-
-    let timer = null
-    return function() {
-        if (flag) return
-        timer = setTimeout(() => {
-           
-           fn()
-           flag = true
-        }, 1000)
-    }
-}
-
-
 function debounce(fn, wait) {
     let timer = null
 
@@ -300,16 +286,45 @@ function debounce(fn, wait) {
 **节流**
 
 ```js
+
+// 简易版本
 function throttle(fn, delay) {
     let preTime = Date.now()
 
     return (...args) => {
+        const curTime = Date.now()
+
+        if (curTime - preTime > delay) {
+            fn.apply(this, args)
+            preTime = curTime
+        }
+    }
+}
+
+// 时间戳 + 定时器 版本 保证有头有尾的执行
+function throttle(fn, delay) {
+    let preTime = Date.now()
+    let timer = null
+
+    return (...args) => {
         let curTime = Date.now()
+        clearTimeout(timer)
 
         if (curTime - preTime >= delay) {
             preTime = curTime
             fn.apply(this, args)
+            if (timer) {
+                clearTimeout(timer)
+                timer = null
+            }
+            return
         }
+
+        timer = setTimeout(() => {
+            preTime = Date.now()
+            fn.apply(this, args)
+            timer = null
+        }, delay)
     }
 }
 
@@ -691,5 +706,110 @@ var lengthOfLIS = function(nums) {
 
 // 时间复杂度: O(N * N) 两层嵌套循环
 // 空间复杂度: O(N) 用了dp数组
+
+```
+
+**图片懒加载优化**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 1000px;"></div>
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <img class="img" data-src="./docs/public/lake.jpg" />
+    <script>
+        // const viewportHeight = document.documentElement.clientHeight
+        // let currentIndex = 0
+
+        // function loadImg() {
+        //     const imgs = document.querySelectorAll('.img')
+        //     const scrollTop = document.documentElement.scrollTop // 获取滚动条高度
+
+        //     for (let i = currentIndex; i < imgs.length; i++) {
+
+        //         const imgRect = imgs[i].getBoundingClientRect()
+        //         console.log(imgRect.top, 'sass')
+        //         // 假如屏幕窗口高度 + 滚动条高度 >= 图片元素与页面顶部的距离 (也就是说图片在可视区域范围内的时候)
+        //         if (imgRect.top < viewportHeight && imgRect.bottom >= 0) {
+        //             imgs[i].src = imgs[i].getAttribute('data-src')
+        //             imgs[i].removeAttribute('data-src')
+        //             currentIndex++
+        //         }
+        //     }
+        // }
+
+        // window.addEventListener('scroll', throttle(loadImg, 200))
+
+        // function throttle(fn, delay) {
+        //     let preTime = Date.now()
+        //     let timer = null
+
+        //     return (...args) => {
+        //         let curTime = Date.now()
+        //         clearTimeout(timer)
+
+        //         if (curTime - preTime >= delay) {
+        //             preTime = curTime
+        //             fn.apply(this, args)
+        //             clearTimeout(timer)
+        //             return
+        //         }
+
+        //         timer = setTimeout(() => {
+        //             preTime = Date.now()
+        //             fn.apply(this, args)
+        //             timer = null
+        //         }, delay)
+        //     }
+        // }
+
+        const io = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    console.log(111111)
+                    const img = entry.target // 获取源对象
+                    const src = img.dataset.src // 获取data-src属性
+                    if (src) {
+                        img.src = src
+                        img.removeAttribute('data-src')
+                    }
+                    observer.unobserve(img) // 这一步记得要取消观察 否则加载完资源后会一直重复走逻辑(避免不必要的开销)
+                }
+            })
+        })
+
+        const imgs = document.querySelectorAll('.img') // 获取所有imgDOM元素
+        
+        // 观察每一个imgDOM元素的视图位置
+        imgs.forEach(img => {
+            io.observe(img)
+        })
+    </script>
+</body>
+
+</html>
 
 ```
