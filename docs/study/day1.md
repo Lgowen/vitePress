@@ -429,6 +429,7 @@ export function parsePath (path) {
 **图片懒加载优化**
 
 ```html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -528,5 +529,34 @@ export function parsePath (path) {
 </body>
 
 </html>
+
+```
+
+
+
+**数组扁平化**
+
+```js
+
+const flatten = (arr) => {
+    const result = []
+
+    function flat(result, arr) {
+        for (const item of arr) {
+            if (Array.isArray(item)) {
+                flat(result, item)
+            } else {
+                result.push(item)
+            }
+        }
+    }
+
+    flatten(result, arr)
+
+    return result
+}
+
+
+const flatten = (arr) => arr.reduce((pre, cur) => pre.concat(Array.isArray(cur) ? flatten(cur) : cur), [])
 
 ```

@@ -103,6 +103,27 @@ var findLength = function(nums1, nums2) {
     }
 
     return res
+
+
+    //  const len1 = nums1.length
+    // const len2 = nums2.length
+
+    // const dp = new Array(len2 + 1).fill(0) // 创建一维数组
+
+    // let max = 0
+
+    // for (let i = 1; i <= len1; i++) {
+    //     for (let j = len2; j >= 1; j--) {
+    //         if (nums1[i] === nums2[j]) {
+    //             dp[j] = dp[j - 1] + 1
+    //         } else {
+    //             dp[j] = 0
+    //         }
+    //         max = Math.max(max, dp[j])
+    //     }
+    // }
+
+    // return max
 };
 
 // 时间复杂度: O(M * N)
@@ -593,4 +614,41 @@ var maxDepth = function(root) {
     // return max + 1
 };
 
+```
+
+
+**删除链表重复节点**
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function(head) {
+
+    if (!head) return head
+
+    let cur = head
+    
+    // 当当前节点的下一个节点存在时
+    while (cur.next) {
+        // 假如下一个节点的值与当前节点的值相等的话
+        // 就把当前节点的下一个节点指向改为再下一个
+        // 否则指针往前移动
+        if (cur.next.val === cur.val) {
+            cur.next = cur.next.next
+        } else {
+            cur = cur.next
+        }
+    }
+
+    return head
+};
 ```

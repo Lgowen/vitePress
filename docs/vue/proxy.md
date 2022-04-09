@@ -319,15 +319,54 @@ effect(() => {
 
 const obj = new Proxy({ age: 18 }, /* ... */)
 
-watch(obj, (newValue, oldValue) => {
+watch(obj, async (newValue, oldValue, onInvalidate) => {
     console.log('obj中的值变化了')
+
+    let expired = false // 表示副作用函数没有过期
+    
+    // 注册副作用函数过期时执行的回调函数（首次执行副作用函数会注册）
+    onInvalidate(() => {
+        expired = true
+    })
+
+    const res = await fetch('/api/list')
+    
+    // 只有当该副作用函数没有过期的时候才会执行
+    if (!expired) {
+        myData = res
+    }
+}, {
+    immediate: true, // 在注册watch的时候立即执行一次回调函数
+    flush: 'post' // pre(组件更新前) sync()
 })
 
 // 上面的watch方法其实是想监听obj的所有属性，也可以是一个getter函数监听响应式数据中的某一个值的变化，从而执行回调函数，且回调函数中可以拿到新的值和旧的值
 
-function watch(source, cb) {
+function watch(source, cb, options = {}) {
 
     let getter
+
+    function onInvalidate(fn) {
+        cleanup = fn
+    }
+
+    let cleanup
+    
+    // 为了立即调用抽离的函数
+    const job = () => {
+
+            newValue = effectFn() // 在source变化时触发获取新的值
+            
+            // 假如该副作用函数有传该副作用函数过期时的回调 则执行
+            // 在执行副作用函数前执行（使得该副作用函数过期)
+            if (cleanup) {
+                cleanup()
+            }
+
+            cb(newValue, oldValue, onInvalidate) // 执行回调函数并且传值（这时候才会执行onInvalidate将该副作用函数变为过期的）
+
+            oldValue = newValue // 执行完回调函数之后 更新oldValue的值 以保证下一次拿到的数据是正确的
+    }
     
     // 假如source是一个函数
     if (typeof source === 'function') {
@@ -343,17 +382,22 @@ function watch(source, cb) {
     const effectFn = effect(() => getter(), {
         lazy: true, // 设置lazy可以使的该副作用函数不立刻执行 可用于自行执行 并且获取副作用函数的返回值(getter的返回值)
         // 在source中的所有值只要发生变化时，则会触发其getter执行(trigger)对应的副作用函数(并且执行调度方法)scheduler
-        scheduler() {
-
-            newValue = effectFn() // 在source变化时触发获取新的值
-
-            cb(newValue, oldValue) // 执行回调函数并且传值
-
-            oldValue = newValue // 执行完回调函数之后 更新oldValue的值 以保证下一次拿到的数据是正确的
+        scheduler: () => {
+            if (options.flush === 'post') {
+                // 放进微任务队列等DOM更新后再执行 副作用函数放到微任务队列 并等待DOM更新后结束后再执行
+                const p = Promise.resolve()
+                p.then(job)
+            } else {
+                job()
+            }
         }
     })
 
-    oldValue = effectFn() // 首次执行获取getter的值
+    if (options.immediate) {
+        job() // 假如有传参数就立即先执行一次回调函数
+    } else {
+        oldValue = effectFn() // 首次执行获取getter的值
+    }
 }
 
 function traverse(source, seen = new Set()) {
@@ -370,5 +414,6 @@ function traverse(source, seen = new Set()) {
 
     return source
 }
+
 
 ```
