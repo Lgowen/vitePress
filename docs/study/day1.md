@@ -560,3 +560,85 @@ const flatten = (arr) => {
 const flatten = (arr) => arr.reduce((pre, cur) => pre.concat(Array.isArray(cur) ? flatten(cur) : cur), [])
 
 ```
+
+
+**实现x的n次方**
+
+
+```js
+
+
+function power(x, n) {
+    if (n === 0) return 1
+
+    const middle = power(x, Math.floor(n / 2)) // 取一半的值
+
+    if (n % 2 === 1) return middle * middle * x // 奇数
+
+    return middle * middle // 偶数
+}
+
+```
+
+**实现add(1,2)(3)**
+
+```js
+
+
+function add(...args) {
+    
+    let arr
+
+    function _add(...arg) {
+        arr = [...args, ...arg]
+        return _add
+    }
+
+
+    _add.toString = function () {
+        // return _add()
+        // console.log(123)
+        return arr.reduce((pre, cur) => {
+            return pre + cur
+        })
+    }
+
+    return _add
+}
+
+add(1,2) => // 3
+
+
+```
+
+
+
+**数组转树**
+
+
+```js
+
+function arrToTree(arr) {
+    const map = {}
+
+    let res
+    
+    arr.forEach(item => {
+        map[item.id] = item // 存引用值
+    })
+
+    arr.forEach(item => {
+        const parent = map[item.pid]
+
+        if (parent) {
+            (parent.children || (parent.children = [])).push(item)
+        } else {
+            res = item // 这是root节点
+        }
+    })
+
+    return res
+}
+
+
+```
