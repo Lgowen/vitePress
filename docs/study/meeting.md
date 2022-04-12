@@ -321,6 +321,46 @@ var levelOrder = function (root) {
 
 ```
 
+**N叉树的最大深度**
+
+```js
+
+/**
+ * // Definition for a Node.
+ * function Node(val,children) {
+ *    this.val = val;
+ *    this.children = children;
+ * };
+ */
+
+/**
+ * @param {Node|null} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    
+    if (!root) return 0
+    let level = 0
+
+    const queue = [root]
+
+    while (queue.length) {
+        let len = queue.length
+        level++
+        while (len--) {
+            const node = queue.shift()
+            for (const item of node.children) {
+                if (item) queue.push(item)
+            }
+        }
+    }
+
+    return level
+
+};
+```
+
+
 **大数相加**
 
 ```js

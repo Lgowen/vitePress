@@ -216,3 +216,41 @@ const cacheRequest = (url, options) => {
 
 
 ```
+
+
+
+**实现一个异步任务调度器控制并发数量**
+
+
+```js
+
+
+class Scheduler {
+  constructor(maxNum) {
+    this.queue = []
+
+    this.maxNum = maxNum
+
+    this.current = 0
+  }
+
+  async add(promiseCreator) {
+    if (this.current >= this.maxNum) {
+      await new Promise(resolve => this.queue.push(resolve))
+    }
+
+    this.current++
+
+    const res = await promiseCreator() 
+
+    this.current--
+
+    this.queue.length && this.queue.shift()()
+
+    return res
+  }
+}
+
+
+
+```
