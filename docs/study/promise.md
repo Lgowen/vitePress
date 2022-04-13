@@ -234,23 +234,64 @@ class Scheduler {
     this.current = 0
   }
 
-  async add(promiseCreator) {
+  // async add(promiseCreator) {
+  //   if (this.current >= this.maxNum) {
+  //     await new Promise(resolve => this.queue.push(resolve))
+  //   }
+
+  //   this.current++
+
+  //   const res = await promiseCreator() 
+
+  //   this.current--
+
+  //   this.queue.length && this.queue.shift()()
+
+  //   return res
+  // }
+
+    async add(fn) {
     if (this.current >= this.maxNum) {
-      await new Promise(resolve => this.queue.push(resolve))
+      new Promise(resolve => {
+        this.queue.push(resolve)
+      }).then(() => {
+        this.startTask(fn)
+      })
+    } else {
+      this.startTask(fn)
     }
+  }
+
+  async startTask(fn) {
 
     this.current++
-
-    const res = await promiseCreator() 
-
+    const res = await fn()
     this.current--
 
-    this.queue.length && this.queue.shift()()
+    this.queue.length && this.queue.shift()() // 当执行完后从阻塞队列中取出改变Promise的状态以至于让任务继续执行
 
     return res
   }
 }
 
+// 延迟函数
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
+// 同时进行的任务最多2个
+const scheduler = new Scheduler(2);
+
+// 添加异步任务
+// time: 任务执行的时间
+// val: 参数
+const addTask = (time, val) => {
+    scheduler.add(() => {
+        return sleep(time).then(() => console.log(val));
+    });
+};
+
+addTask(1000, '1');
+addTask(500, '2');
+addTask(300, '3');
+addTask(400, '4');
 
 ```
