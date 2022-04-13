@@ -690,3 +690,31 @@ console.log(judgeSameNum([1,2,3,4,5], [2, 3]))
 
 
 ```
+
+**下划线转小驼峰**
+
+
+```js
+function toHump(name) {
+    return name.replace(/\_(\w)/g, function(all, letter){
+        console.log(all, letter)
+        return letter.toUpperCase();
+    });
+}
+let a = 'css_style_sheet';
+console.log(toHump(a));
+
+
+```
+
+
+**小驼峰转下划线**
+
+```js
+function toLine(name) {
+  return name.replace(/([A-Z])/g,"_$1").toLowerCase();
+}
+let b = 'cssStyleSheet';
+console.log(toLine(b));
+
+```
