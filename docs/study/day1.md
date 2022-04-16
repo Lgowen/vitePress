@@ -718,3 +718,84 @@ let b = 'cssStyleSheet';
 console.log(toLine(b));
 
 ```
+
+
+**实现一个call**
+
+
+```js
+var name = 'lgowen'
+
+var obj = {
+    name: 'cherry'
+}
+
+function printName() {
+    console.log(this.name)
+}
+
+Function.prototype.call = function(context) {
+
+    const args = [...arguments].slice(1) // 获取函数参数
+
+    context = context || window // 获取调用对象
+
+    context.fn = this // this指向该函数
+
+    const res = context.fn(...args) // 执行函数
+
+    delete context.fn // 执行完删除函数
+
+    return res // 返回结果
+}
+
+printName.call(obj)
+
+
+```
+
+
+**实现一个apply**
+
+
+```js
+
+Function.prototype.apply = function (context) {
+
+    context = context || window
+
+    context.fn = this
+
+    let res = null
+
+    if (arguments[1]) {
+        res = context.fn(...arguments[1])
+    } else {
+        res = context.fn()
+    }
+
+    delete context.fn 
+
+    return res
+}
+
+```
+
+**实现一个bind**
+
+
+```js
+
+Function.prototype.bind = function (context) {
+
+    const fn = this
+    const args = [...arguments].slice(1) // 获取参数 bind的参数
+
+    return function Fn() {
+        // 这里的arguments是Fn的参数
+        return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments)) // 判断返回的函数this指向是用new调用的还是直接执行的 传入的参数进行拼接
+    }
+}
+
+```
+
