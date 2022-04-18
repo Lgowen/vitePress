@@ -1,0 +1,1 @@
+import{_ as n,y as s,x as a,W as p}from"./plugin-vue_export-helper.8685c10c.js";const f='{"title":"promise\u5408\u96C6 #","description":"","frontmatter":{},"headers":[],"relativePath":"study/promise.md","lastUpdated":1650278083715}',t={},o=p("",19),c=[o];function e(u,l,k,i,r,m){return a(),s("div",null,c)}var g=n(t,[["render",e]]);export{f as __pageData,g as default};
