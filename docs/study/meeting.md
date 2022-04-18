@@ -692,3 +692,52 @@ var deleteDuplicates = function(head) {
     return head
 };
 ```
+
+
+**二叉树的所有路径(和)**
+
+```js
+
+function findPath(root) {
+    const res = [] // 所有路径
+    function dfs(root, path) {
+        if (root) {
+            path += String(root.val)
+            if (!root.left && !root.right) {
+                res.push(path)
+            }
+            else {
+                dfs(root.left, path)
+                dfs(root.right, path)
+            }
+        }
+    }
+
+    dfs(root, '')
+    return res.reduce((pre, cur) => Number(pre) + Number(cur))
+}
+
+
+var root = {
+    val: 1,
+    left: {
+        val: 2,
+        left: {
+            val: 3,
+            left: null,
+            right: null
+        },
+        right: {
+            val: 5,
+            left: null,
+            right: null
+        }
+    },
+    right: {
+        val: 4,
+        left: null,
+        right: null
+    }
+}
+
+```
