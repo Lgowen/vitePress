@@ -823,7 +823,7 @@ class EventEmitter {
         if (effects) {
             this.cache[event] = [fn]
         } else {
-            this.cache.get(event).push(fn)
+            this.cache[event].push(fn)
         }
         return this
     }

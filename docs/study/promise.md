@@ -295,3 +295,82 @@ addTask(300, '3');
 addTask(400, '4');
 
 ```
+
+
+**请求控制并发**
+
+```js
+
+
+
+
+function asyncPool(limit, promiseArr) {
+
+    const res = [] // 储存所有的Promise
+
+    const excuting = [] // 储存正在执行的Promise
+
+    
+    for (const promise of promiseArr) {
+
+        const p = Promise.resolve().then(() => promise()) // 新建一个promise来查看其状态
+
+        res.push(promise)
+
+        // 当限制的数量小于promiseArr长度时需要进行并发控制
+        if (limit <= promiseArr.length) {
+
+            const e = p.then(() => excuting.splice(excuting.indexOf(e), 1)) // 当promise执行完时把正在执行的任务删除
+
+            excuting.push(e)
+
+            if (excuting.length >= limit) {
+                // 如果正在执行的任务数 大于限制数
+                
+                await Promise.race(excuting) // 等待执行快的那个结果执行完成
+            }
+        }
+
+    }
+
+    return Promise.all(res)
+}
+
+// 开发中需要在多个promise处理完成后执行后置逻辑，通常使用Promise.all：
+
+// Primise.all([p1, p2, p3]).then((res) => ...)
+// 但是有个问题是，因为 promise 创建后会立即执行，也就是说传入到 promise.all 中的多个 promise 实例，
+// 在其创建的时候就已经开始执行了，如果这些实例中执行的异步操作都是 http 请求，那么就会在瞬间发出 n 个 http 请求，这样显然是不合理的；
+// 更合理的方式是：对 Promise.all 中异步操作的执行数量加以限制，同一时间只允许有 limit 个异步操作同时执行。
+
+const timeout = (i) => {
+  console.log("开始", i)
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(i)
+      console.log("结束", i)
+    }, i)
+  )
+}
+
+async function asyncPool(limit, array, iteratorFn) {
+  const ret = [] // 存储所有的异步任务
+  const executing = [] // 正在执行的任务
+  for (let item of array) {
+    const p = Promise.resolve().then(() => iteratorFn(item))
+    ret.push(p)
+    if (limit <= array.length) {
+      const e = p.then(() => executing.splice(executing.indexOf(e), 1))
+      executing.push(e)
+      if (executing.length >= limit) {
+        await Promise.race(executing);
+      }
+    }
+  }
+  console.log(ret)
+  return Promise.all(ret)
+}
+
+asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(res => console.log(res))
+
+```
