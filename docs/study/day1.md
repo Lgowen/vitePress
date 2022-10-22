@@ -36,6 +36,41 @@ fullArrangement([
   ["b1", "b2"],
   ["c1", "c2"],
 ]);
+
+function permute(nums) {
+
+    const res = [] // 存放结果数组
+    const track = [] // 存放当前路径
+    
+
+    function findTrack(track) {
+
+        if (track.length === nums.length) {
+            // 假如当前路径的长度与原数组长度相同时则当前路径寻找完毕 放入结果数组中
+            // 用slice是使用副本不影响引用值 不然结果中的路径会一直改变为相同结果
+            res.push(track.slice())
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+            
+            // 当前路径中含有当前数字时则跳过本次循环
+            if (track.includes(nums[i])) {
+                continue
+            }
+
+            track.push(nums[i]) // 向当前路径推入当前数字
+
+            findTrack(track) // 对当前路径进行回溯 寻找下一个值
+
+            track.pop() // 寻找完后把值弹出
+        }
+    }
+
+    findTrack(track)
+
+    return res
+}
+
 ```
 
 **寻找驼峰数字**
