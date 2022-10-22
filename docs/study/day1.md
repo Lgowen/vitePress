@@ -849,3 +849,46 @@ class EventEmitter {
 }
 
 ```
+
+# LRU缓存
+
+```js
+
+class LRUCache(capacity) {
+    this.cache = capacity
+    this.map = new Map()
+
+    get(key) {
+
+        const isExist = this.map.has(key)
+
+        if (isExist) {
+            const value = this.map.get(key)
+            // 保证该key在最新操作过
+            this.map.delete(key)
+            this.map.set(key, value)
+            return value
+        } else {
+            return -1
+        }
+    }
+
+
+    put(key, value) {
+        const isExist = this.map.has(key)
+
+        // 先删后存保证该key是最新操作过的
+        if (isExist) {
+            this.map.delete(key)
+        }
+        this.map.set(key, value)
+       
+        // 如果超出容量时从缓存中把最旧的那个key干掉
+        if (this.map.size() > this.cache) {
+            const keys = [...this.map.keys()]
+            this.map.delete(keys[0])
+        }
+    }
+}
+
+```
