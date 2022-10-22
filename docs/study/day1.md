@@ -885,7 +885,7 @@ class EventEmitter {
 
 ```
 
-# LRU缓存
+**LRU缓存**
 
 ```js
 

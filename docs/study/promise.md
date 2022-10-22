@@ -374,3 +374,55 @@ async function asyncPool(limit, array, iteratorFn) {
 asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(res => console.log(res))
 
 ```
+
+
+**链式调用队列**
+
+```js
+
+let chain = new Chain()
+chain().work().sleep(6).work().sleep(3)
+// chain().work()
+// chain().sleep(3)
+// chain().work()
+
+//需要结果是 
+work
+等待6ms
+work
+等待3ms
+work
+等待3ms
+work
+
+class Chain() {
+
+  task = Promise.resolve() // 创建一个状态为fullfilled的promise 
+
+  work() {
+    // 执行当前任务
+    // 然后更改当前任务 即降当前任务执行完后返回的promise赋值给task以便下一次使用时在其后面
+    this.task = this.task.then(() => {
+      console.log('work')
+    })
+    console.log(this.task, 'this.task')
+
+    return this
+  }
+
+
+  sleep(time) {
+
+    this.task = this.task.then(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log(`等待${time}ms`)
+        }, time)
+      })
+    })
+
+    return this
+  }
+}
+
+```
