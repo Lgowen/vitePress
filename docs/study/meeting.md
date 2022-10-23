@@ -741,3 +741,130 @@ var root = {
 }
 
 ```
+
+
+**最大子数组和**
+
+```js
+// 给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+
+// 子数组 是数组中的一个连续部分。
+
+// 示例 1：
+
+// 输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+// 输出：6
+// 解释：连续子数组 [4,-1,2,1] 的和最大，为 6 。
+// 示例 2：
+
+// 输入：nums = [1]
+// 输出：1
+// 示例 3：
+
+// 输入：nums = [5,4,-1,7,8]
+// 输出：23
+
+function maxSubArray(nums) {
+
+    let preSum = maxSum = nums[0] // 初始化 上一轮的总数和最大总数和
+
+    if (nums.length === 1) return maxSum // 如果只有一个数字则返回其结果
+
+    for (let i = 1; i < nums.length; i++) {
+         
+        // 如果上一轮的总数和结果小于0 则对总数造成负影响
+        // 则把当前值赋值给当前总数和做下一轮的计算
+        if (preSum < 0) {
+            preSum = nums[i]
+        } else {
+            preSum += nums[i] // 正增长进行增加
+        }
+
+        maxSum = Math.max(maxSum, preSum)  // 每轮取较大值替换
+    }
+
+    return maxSum
+}
+
+```
+
+**零钱兑换**
+
+```js
+// 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+
+// 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。
+
+// 你可以认为每种硬币的数量是无限的。
+
+// 示例 1：
+
+// 输入：coins = [1, 2, 5], amount = 11
+// 输出：3 
+// 解释：11 = 5 + 5 + 1
+// 示例 2：
+
+// 输入：coins = [2], amount = 3
+// 输出：-1
+// 示例 3：
+
+// 输入：coins = [1], amount = 0
+// 输出：0
+
+function coinChange(coins, amount) {
+    
+    const dp = Array(amount + 1).fill(amount + 1) // 初始化dp数组 存的值从计算从0 到 amount数量时所需的最少硬币数
+
+    dp[0] = 0 // 凑0元需要0个硬币
+
+    for (let target = 1; target < dp.length; target++) {
+        for (const coin of coins) {
+            // 假如当前目标数值小于当前硬币面值时（根本凑不出来) 跳过循环
+            if (target < coin) {
+                continue
+            }
+            dp[target] = Math.min(dp[target], 1 + dp[target - coin]) // 取小值 dp[target - coin]为从凑目标面值所需最少硬币 = 1 + 凑（目标面值 - 当前面值）所需最少硬币
+        }
+    }
+
+    return (dp[amount] === amount + 1) ? -1 : dp[amount] // 判断凑不凑得出值
+}
+
+```
+
+
+**买卖股票最佳时机**
+
+```js
+
+// 给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+
+// 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+
+// 返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
+
+// 输入：[7,1,5,3,6,4]
+// 输出：5
+// 解释：在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+//      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。
+// 示例 2：
+
+// 输入：prices = [7,6,4,3,1]
+// 输出：0
+// 解释：在这种情况下, 没有交易完成, 所以最大利润为 0。
+
+function maxProfit(prices) {
+
+    let maxPrice = 0 // 初始化最大利润
+    let minCost = prices[0] // 初始化最小买入
+
+    for (let i = 1; i < prices.length; i++) {
+
+        maxPrice = Math.max(maxPrice, prices[i] - minCost) // 每次循环计算最大利润 当前卖出 - 最小买入
+        minCost = Math.min(minCost, prices[i]) // 每次计算完最大利润后就算最小买入 当前买入 与 最小买入进行比较
+    }
+
+    return maxPrice
+}
+
+```
