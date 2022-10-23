@@ -927,3 +927,88 @@ class LRUCache(capacity) {
 }
 
 ```
+
+
+**retry函数**
+
+```js
+function doSomething(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            if(Math.random()<0.2){
+                resolve('resolve')
+            }else{
+                reject('reject')
+            }
+        })
+    })
+}
+
+//实现一个方法 重试某个方法  retryTimes 次直到成功 返回第一次成功的结果 or 最后一次失败的错误原因
+function retry(fn,retryTimes){
+    //分别用async await实现和不用async await 实现 
+}
+retry(doSomething,retryTimes)
+
+
+// 用async await实现 
+function retry(fn, retryTimes) {
+
+    let count = 1
+
+    return new Promise(async (resolve, reject) => {
+
+      while (count <= retryTimes) {
+        try {
+          const res = await fn()
+          return resolve(res)
+        } catch (err) {
+          if (count === retryTimes) return reject(err)
+          count++
+        }
+      }
+    })
+}
+
+async function retry(fn, retryTimes) {
+  let count = 1
+
+  while (count <= retryTimes) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (count === retryTimes) return err
+      count++
+    }
+  }
+}
+
+// 不用async await 实现 
+function retry(fn,retryTimes){
+
+    let count = 1
+
+    return new Promise((resolve, reject) => {
+
+        const excute = () => {
+          fn().then(res => {
+            return resolve(res)
+          }).catch(err => {
+            if (count === retryTimes) {
+              return reject(err)
+            } else {
+              excute()
+              count++
+            }
+          })
+        }
+
+        excute()
+    })
+}
+
+
+const res = retry(doSomething,2).then(res => console.log(res)).catch(err => console.log(err))
+
+
+```
