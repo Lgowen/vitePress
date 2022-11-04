@@ -113,6 +113,49 @@
 ```js
 // 个人介绍
 
+// Bridge 顾名思义就是 JS 和 Native 通信的一个桥梁, 所有的本地存储、图片资源访问、图形绘制、3D加速、网络访问、震动效果、NFC、原生控件绘制、地图、定位、通知等等很多功能都是由 Bridge 封装成 JS 接口以后注入 JS Engine 供 JS 调用
+
+// 每一个支持 RN 的原生功能必须有同一个原生模块和一个 JS 模块, JS 模块方便调用其接口, 原生模块去根据接口调用原生功能实现原生效果
+
+// Bridge 原生代码负责管理原生模块并能够方便的被 React 调用, 每个功能 JS 封装主要是对 React 做适配, JS 和 Native 之间不存在任何指针传递, 所有的参数均由字符串传递
+
+// Bridge 各模块介绍
+// RCTRootView
+
+// RCTRootView 是 RN 加载的地方, 从这里开始有了 JS Engine. JS 代码被加载进来, 对应的原生模块也被加载进来, 然后 JS loop 开始
+// RCTRootView 初始化代码完成后, 整个 React Native 运行环境就已经初始化好, JS 代码也加载完毕, 所有 React 的绘制都会有这个 RCTRootView 来管理
+// 创建并持有 RCTBridge
+// 加载 JS Bundle 初始化 JS 运行环境
+// 初始化 JS 运行环境后会在 app 显示 loadingView
+// JS 运行环境准备好就被加载视图 RCTRootContentView 替换加载视图
+// 准备工作就绪之后就调用 AppRegistry.runApplication 正式启动 RN 代码, 从 Root 组件开始 UI 绘制
+// RCTBridge
+
+// 加载和初始化专用类, 用于前期 JS 的初始化和原生代码的加载
+// 负责加载各个 Bridge 模块供 JS 调用
+// 找到并注册实现了 RCTBridgeModule protocol 的类
+// 创建持有 RCTBatchedBridge
+// RCTBatchedBridge
+
+// 负责 Native 和 JS 之间的相互调用, 也就是信息通信
+// RCTJavaScriptLoader
+
+// 实现远程代码的核心, 热更新, 开发环境代码加载. 静态 jsbundle 加载
+// RCTContextExecutor
+
+// 封装了 JS 和 Native 代码的互相调用逻辑
+// RCTModuleData
+
+// 加载管理所有与 JS 交互的原生代码, 把交互代码封装成 JS 模块
+// RCTModuleMethod
+
+// 记录所有原生代码的导出函数地址, 同时生成对应的字符串映射到改函数地址
+// 翻译所有 J2N call
+// MessageQueue
+
+// RN 是不用 JS 引擎的 UI 渲染控件的, 但是会用到 JS 引擎的 DOM 操作管理能力来管理所有 UI 节点, 每次在写完 UI 组件代码后会交给 yoga 去做布局排版, 然后调用原生组件绘制
+// MessageQueue 负责跳出 JS 引擎, 记录原生接口的地址和对应的 JS 函数名, 然后在 JS 调用该函数的时候把调用转发给原生接口
+
 
 // 面试官你好，我是去年通过校招加入的滴滴。在滴滴里是做橙心优选供应链体系相关的系统。我自己个人这边主要负责的是供应商侧相关系统的业务	；。
 // 一个是供应商小程序，主要负责的模块是有关商户权益和规则中心的内容。 
