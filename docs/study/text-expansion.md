@@ -113,6 +113,16 @@
 ```js
 // 个人介绍
 
+// native thread
+// 这个线程主要负责原生渲染和调用原生能力。
+
+// js thread
+// js 线程用于解释和执行我们的 js 代码。在大多数情况下， react native 使用的 js 引擎是JSC(
+// JavaScriptCore) ，在使用 chrome 调试时，所有的 js 代码都运行在 chrome 中，并且通过 websocket 与原生代码通信。此时的运行环境是 v8 。
+
+// shadow thread
+// 要渲染到界面上一个很重要的步骤就是布局，我们需要知道每个组件应该渲染到什么位置，这个过程就是通过 yoga 去实现的，这是一个基于 flexbox 的跨平台布局引擎。 shadow thread 会维护一个 shadow tree 来计算我们的各个组件在 native 页面的实际布局，然后通过 bridge 通知 native thread 渲染 ui 。
+
 // Bridge 顾名思义就是 JS 和 Native 通信的一个桥梁, 所有的本地存储、图片资源访问、图形绘制、3D加速、网络访问、震动效果、NFC、原生控件绘制、地图、定位、通知等等很多功能都是由 Bridge 封装成 JS 接口以后注入 JS Engine 供 JS 调用
 
 // 每一个支持 RN 的原生功能必须有同一个原生模块和一个 JS 模块, JS 模块方便调用其接口, 原生模块去根据接口调用原生功能实现原生效果
