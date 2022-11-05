@@ -868,3 +868,94 @@ function maxProfit(prices) {
 }
 
 ```
+
+
+**77. 组合**
+
+```js
+
+// 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
+
+// 你可以按 任何顺序 返回答案。
+
+// 示例 1：
+
+// 输入：n = 4, k = 2
+// 输出：
+// [
+//   [2,4],
+//   [3,4],
+//   [2,3],
+//   [1,2],
+//   [1,3],
+//   [1,4],
+// ]
+// 示例 2：
+
+// 输入：n = 1, k = 1
+// 输出：[[1]]
+
+/**
+ * @param {number} n
+ * @param {number} k
+ * @return {number[][]}
+ */
+
+var combine = function(n, k) {
+
+    const res = []
+
+
+    function findCombine(start, pre) {
+
+        if (pre.length === k) {
+            res.push(pre)
+            return 
+        }
+
+        if (start > n) return
+
+        for (let i = start; i <= n; i++) {
+            findCombine(i + 1, [...pre, i])
+        }
+    }
+
+    findCombine(1, [])
+    return res
+};
+
+// 参考全排列的方案
+var combine = function(n, k) {
+
+    const arr = Array.from({ length: n }).map((_, i) => i + 1)
+    const res = []
+    let stack = []
+
+    function findCombine(start, stack) {
+
+        if (stack.length === k) {
+            res.push(stack.slice())
+        }
+
+        for (let i = start; i < arr.length; i++) {
+
+            // 排除重复case
+            // if (stack.includes(arr[i]) || stack[0] > arr[i]) {
+            //     continue
+            // }
+
+            stack.push(arr[i])
+
+            findCombine(i + 1, stack)
+
+            stack.pop()
+        }
+
+    }
+
+    findCombine(0, stack)
+
+    return res
+};
+
+```
