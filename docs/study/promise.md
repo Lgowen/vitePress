@@ -426,3 +426,52 @@ class Chain() {
 }
 
 ```
+
+**实现并发请求，并按顺序打印**
+
+```js
+
+
+function fetch(url) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(url)
+    }, Math.random() * 1000)
+  })
+}
+
+function fetchUrl(urls) {
+
+
+  return new Promise((resolve, reject) => {
+    let curIndex = 0
+    const ans = []
+
+    urls.forEach((url, index) => {
+
+      fetch(url).then((res) => {
+        ans[index] = res
+  
+        if (curIndex === index) {
+          console.log(ans)
+          curIndex = ans.length
+        }
+        if (index === urls.length) {
+          resolve(ans)
+        }
+      }, err => {
+        reject(err)
+      })
+    })
+  })
+}
+
+const urls = [
+    "www.baidu.com",
+    "www.163.com",
+    "www.qq.com",
+    "www.fendou.host",
+    "www.aliyun.com",
+];
+
+```
