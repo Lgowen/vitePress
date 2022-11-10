@@ -959,3 +959,43 @@ var combine = function(n, k) {
 };
 
 ```
+
+**接雨水**
+
+```js
+
+// 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
+// 输出：6
+// 解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
+// 示例 2：
+
+// 输入：height = [4,2,0,3,2,5]
+// 输出：9
+
+
+var trap = function(height) {
+
+    const len = height.length
+
+    if (len === 0) return len
+
+    const leftMax = new Array(len).fill(0)
+    leftMax[0] = height[0]
+    for (let i = 1; i < len; i++) {
+        leftMax[i] = Math.max(leftMax[i - 1], height[i])
+    }
+
+    const rightMax = new Array(len).fill(0)
+    rightMax[len - 1] = height[len - 1]
+    for (let i = len - 2; i >= 0; i--) {
+        rightMax[i] = Math.max(rightMax[i + 1], height[i])
+    }
+
+    let ans = 0
+    for (let i = 0; i < len; i++) {
+        ans += Math.min(leftMax[i], rightMax[i]) - height[i]
+    }
+    return ans
+}
+
+```
