@@ -1,15 +1,15 @@
 ---
 home: true
 heroAlt: Logo image
-heroText: Welcome to My LeetCode World!
+heroText: Welcome to My World!
 tagline: Just Trust Yourself
 actionText: Enter
 actionLink: /leetcode/day1
 features:
-  - title: Simplicity First
-    details: Minimal setup with markdown-centered project structure helps you focus on writing.
-  - title: Vue-Powered
-    details: Enjoy the dev experience of Vue + webpack, use Vue components in markdown, and develop custom themes with Vue.
-  - title: Performant
-    details: VitePress generates pre-rendered static HTML for each page, and runs as an SPA once a page is loaded.
-footer: MIT Licensed | Copyright © 2019-present Evan You
+  - title: Interests
+    details: Basketball、skiing
+  - title: Learning
+    details: React、Webpack
+  - title: Skills
+    details: HTML、CSS、JS、Vue、Element、Vant
+footer: MIT Licensed | Copyright © 2022-present Yawen

@@ -1,8 +1,8 @@
 import { readAllFiles } from "../utils";
-import { leetcodePath, studyPath, vuePath } from "../contant" 
+import { leetcodePath, studyPath, vuePath, webpackPath } from "../contant" 
 
 module.exports = {
-  title: "用算法娱乐身心", // 网站标题
+  title: "前端小文", // 网站标题
   description: "leetcode share.", //网站描述
   //   base: "/", //  部署时的路径 默认 /  可以使用二级地址 /base/
   base: '/vitePress/', // 在这里我与部署的站点一致 https://lgowen.github.io/vitePress 就不根据环境区分了
@@ -24,15 +24,17 @@ module.exports = {
     repo: "Lgowen", // 你的 github 仓库地址，网页的右上角会跳转
     // 头部导航
     nav: [
-      { text: "剑指offer", link: "leetcode/day1" },
+      { text: "前端基础", link: "leetcode/day1" },
       { text: "日常学习", link: "study/day1" },
-      { text: 'vue', link: "vue/v-model"}
+      { text: 'vue', link: "vue/v-model"},
+      { text: 'webpack', link: "webpack/demo"}
     ],
     // 侧边栏
     sidebar: {
       "/leetcode/": readAllFiles(leetcodePath, true),
       "/study/": readAllFiles(studyPath),
-      "/vue/": readAllFiles(vuePath)
+      "/vue/": readAllFiles(vuePath),
+      "webpack": readAllFiles(webpackPath)
     },
   },
 };

@@ -999,3 +999,195 @@ var trap = function(height) {
 }
 
 ```
+
+**八爪鱼笔试题**
+
+```js
+// 'asbscs' -> '()()()'
+function changeWord(str) {
+    let newStr = ''
+    const obj = { a: 1, s: 3, c: 1, b: 1 }
+    for (let i = 0; i < str.length; i++) {
+        const strr = str[i]
+        console.log(str[strr])
+        if (obj[strr] > 1) {
+            newStr += ')'
+        } else {
+            newStr += '('
+        }
+    }
+    
+    return newStr
+}
+
+let str = 'asbscs'
+console.log(changeWord(str))
+
+// 寻找数组中排序后最少添加几位数字可以存在递增序列
+function findMinNum(arr) {
+   const newArr = arr.sort()
+   let min = Infinity
+   for (let i = 0; i < newArr.length - 1; i++) {
+       const cur = newArr[i]
+       const next = newArr[i + 1]
+       const extra = next - cur - 1
+       console.log(cur, next, extra)
+       if (extra < min) {
+           min = extra
+       }
+   }
+    
+    console.log(min)
+   
+}
+
+let arr = [3, 1, 8, 6]
+
+// [1, 3, 6, 8]
+// 1 2 1
+// 1
+
+console.log(findMinNum(arr))
+
+// 关键词匹配
+const keyWords = ['error message', 'stupid kid', 'demo page']
+
+function findErrorEmail(str) {
+    let ans = false
+    keyWords.forEach(word => {
+        let len = 0
+        for (const i in str) {
+            const newI = Number(i)
+            if (str[newI] === word[len] && str[newI + 1] === word[len + 1] && newI < str.length - 1) {
+                console.log(str[newI], word[len], str[newI + 1], word[len + 1], newI)
+                len++
+            } else {
+                len = 0
+            }
+            if (len + 1 === word.length) {
+               ans = true
+               return
+            }
+        }
+    })
+    return ans
+}
+
+console.log(findErrorEmail('demo message demo page'))
+
+
+```
+**文件夹获取数据并处理**
+
+```js
+/** Some other codes maybe */
+const LANGUAGES = ['en', 'zh']; // 在这里我认为提前预知到所拥有的语种,否则从文件中读取所有的语言再拿出作key性能不高
+
+// 数据存储
+const DATAMAP = {
+  en: {},
+  zh: {},
+};
+
+const fs = require('fs');
+const path = require('path');
+
+// 转换驼峰
+const toHump = (name) => {
+  return name.replace(/\-(\w)/g, function (_, letter) {
+    return letter.toUpperCase();
+  });
+};
+
+// 寻找路径
+const findPath = (root) => {
+  const res = []; // 所有路径
+  function dfs(curPath, allPath) {
+    if (curPath) {
+      const childList = findChildList(curPath);
+      const pathName = toHump(getPathName(curPath));
+      allPath += `${pathName}-`; // 拼接路径
+
+      childList.forEach(async (fileName) => {
+        const childPath = path.join(__dirname, curPath + fileName); // 孩子路径
+        const isDir = fs.statSync(childPath).isDirectory(); // 判断是否文件夹
+        const temp = curPath + fileName + '/'; // 生成新路径
+        const fatherArr = allPath.split('-').slice(1, -1); // 对拼接后的路径作处理为文件夹名称(以便后续赋值)
+        // 判断是否文件夹
+        if (isDir) {
+          // 判断该文件夹是否为index命名
+          if (fileName === 'index') {
+            const childFileList = fs.readdirSync(path.join(__dirname, temp));
+            childFileList.forEach(async (childName) => {
+              const childFilePath = path.join(__dirname, temp + childName);
+              const { default: data } = await import(childFilePath);
+              // if ()
+              console.log(childName, 'index文件夹底下的文件名');
+              const handleName = childName.split('.')[0];
+              if (handleName !== 'index') {
+                fatherArr.push(toHump(handleName));
+              }
+              LANGUAGES.forEach((language) =>
+                normalCreatedata(DATAMAP[language], fatherArr, data, language)
+              );
+            });
+          } else {
+            dfs(temp, allPath); // 否则递归
+          }
+        } else {
+          res.push(path);
+          const { default: data } = await import(childPath);
+          const handleName = fileName.split('.')[0];
+          if (handleName !== 'index') {
+            fatherArr.push(toHump(handleName));
+          }
+          LANGUAGES.forEach((language) =>
+            normalCreatedata(DATAMAP[language], fatherArr, data, language)
+          );
+        }
+      });
+    }
+  }
+  dfs(root, []); // 递归入口
+};
+
+// 找子文件(夹)目录名
+const findChildList = (dir) => {
+  return fs.readdirSync(path.join(__dirname, dir));
+};
+
+// 获取某个路径下的文件(夹)名
+const getPathName = (dir) => {
+  return path.parse(dir).name;
+};
+
+// 创造数据
+function normalCreatedata(handleData, fatherArr = [], insertData, language) {
+  let newData;
+  const newInsertData = {}; // 避免污染源数据
+  fatherArr.forEach((key, index) => {
+    // 处理第一层数据
+    if (index === 0) {
+      newData = handleData[key] ?? (handleData[key] = {});
+    } else {
+      newData = newData[key] ?? (newData[key] = {});
+    }
+  });
+  Object.keys(insertData).forEach((key) => {
+    newInsertData[key] = insertData[key][language]; // 根据语言取值
+    newData[key] = newInsertData[key]; // 赋值
+  });
+
+  return handleData;
+}
+
+const handleData = (/** Some params maybe */) => {
+  // Your code here
+  findPath('/my-data/');
+  setTimeout(() => {
+    console.log(JSON.stringify(DATAMAP), 'DATAMAP');
+  }, 1000);
+};
+
+handleData();
+```
