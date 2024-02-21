@@ -1191,3 +1191,37 @@ const handleData = (/** Some params maybe */) => {
 
 handleData();
 ```
+
+**闭合标签匹配**
+
+```js
+function isHTMLTagValid(htmlString) {
+  const stack = [];
+
+  // 使用正则表达式匹配所有标签
+  const tagRegex = /<\/?([a-z][a-z0-9][^>\s]*)[^>]*>/gi;
+  let match;
+  while ((match = tagRegex.exec(htmlString)) !== null) {
+      console.log(match, 'match')
+    const tagName = match[1];
+    console.log(tagName, 'tagName')
+
+    // 检查是否是闭合标签
+    if (tagName.charAt(0) === '/') {
+      if (stack.length === 0) {
+        return false; // 栈为空，但存在闭合标签，不合法
+      }
+      const openTag = stack.pop();
+      if (openTag !== tagName.substring(1)) {
+        return false; // 闭合标签与栈顶标签不匹配，不合法
+      }
+    } else {
+      stack.push(tagName.toLowerCase()); // 将开放标签入栈
+    }
+    console.log(stack)
+  }
+
+  return stack.length === 0; // 所有标签遍历完后，栈为空则合法
+}
+
+```
