@@ -201,3 +201,68 @@ var exist = function(board, word) {
 
 
 
+**131. 分割回文串**
+
+```js
+
+// 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是 回文串 。返回 s 所有可能的分割方案。
+
+// 回文串 是正着读和反着读都一样的字符串。
+
+// 示例 1：
+
+// 输入：s = "aab"
+// 输出：[["a","a","b"],["aa","b"]]
+// 示例 2：
+
+// 输入：s = "a"
+// 输出：[["a"]]
+
+/**
+ * @param {string} s
+ * @return {string[][]}
+ */
+var partition = function (s) {
+    const res = []
+    const len = s.length
+
+    function dfs(temp, startIndex) {
+
+        if (startIndex === len) {
+            res.push(temp.slice())
+            return 
+        }
+
+        for (let i = startIndex; i < len; i++) {
+            if (isPali(s, startIndex, i)) {
+                temp.push(s.substring(startIndex, i + 1))
+                dfs(temp, i + 1)
+                temp.pop()
+            }
+        }
+    }
+
+    dfs([], 0)
+
+    return res
+}
+
+
+function isPali(s, l, r) {
+    while (l < r) {
+        if (s[l] !== s[r]) return false
+        l++
+        r--
+    }
+
+
+    return true
+}
+
+```
+
+
+
+
+
+

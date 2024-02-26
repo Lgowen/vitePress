@@ -1225,3 +1225,13 @@ function isHTMLTagValid(htmlString) {
 }
 
 ```
+
+**compose函数实现**
+
+```js
+
+function compose(...args) {
+    return (value) => args.reduceRight((value, fn) => fn(value), value)
+}
+
+```
