@@ -1235,3 +1235,80 @@ function compose(...args) {
 }
 
 ```
+
+
+**14. 最长公共前缀**
+
+```js
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    let ans = strs[0]
+
+
+    for (let i = 1; i < strs.length; i++) {
+        let j = 0
+        for (; j < strs[i].length && j < ans.length; j++) {
+            if (ans[j] !== strs[i][j]) break
+        }
+
+        ans = ans.substring(0, j)
+    }
+
+
+    return ans ? ans : ''
+};
+
+```
+
+**394. 字符串解码**
+
+```js
+
+// 输入：s = "3[a]2[bc]"
+// 输出："aaabcbc"
+// 示例 2：
+
+// 输入：s = "3[a2[c]]"
+// 输出："accaccacc"
+// 示例 3：
+
+// 输入：s = "2[abc]3[cd]ef"
+// 输出："abcabccdcdcdef"
+// 示例 4：
+
+// 输入：s = "abc3[cd]xyz"
+// 输出："abccdcdcdxyz"
+
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var decodeString = function(s) {
+    const numStack = [] // 存放倍数
+    const strStack = [] // 存放当前括号内的字符
+    let num = 0 // 初始化倍数
+    let res = '' // 初始化结果
+
+    for (const str of s) {
+        if (!isNaN(str)) {
+            num = num * 10 + Number(str)
+        } else if (str === '[') {
+            numStack.push(num)
+            num = 0
+            strStack.push(res)
+            res = ''
+        } else if (str === ']') {
+            const repeatTimes = numStack.pop()
+            res = strStack.pop() + res.repeat(repeatTimes)
+        } else {
+            res += str
+        }
+    }
+
+    return res
+};
+
+```
