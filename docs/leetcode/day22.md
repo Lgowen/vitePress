@@ -149,7 +149,53 @@ var longestPalindrome = function(s) {
 
 ```
 
+**647. 回文子串**
 
+```js
+// 给你一个字符串 s ，请你统计并返回这个字符串中 回文子串 的数目。
+
+// 回文字符串 是正着读和倒过来读一样的字符串。
+
+// 子字符串 是字符串中的由连续字符组成的一个序列。
+
+// 具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。
+
+// 示例 1：
+
+// 输入：s = "abc"
+// 输出：3
+// 解释：三个回文子串: "a", "b", "c"
+// 示例 2：
+
+// 输入：s = "aaa"
+// 输出：6
+// 解释：6个回文子串: "a", "a", "a", "aa", "aa", "aaa"
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var countSubstrings = function(s) {
+    const len = s.length
+    let res = 0
+
+    function handleStr(l, r) {
+        while (l >= 0 && r < len && s[l] === s[r]) {
+            l--
+            r++
+            res++
+        }
+    }
+
+    for (let i = 0; i < len; i++) {
+        handleStr(i, i)
+        handleStr(i, i + 1)
+    }
+
+    return res
+};
+
+```
 
 **1143. 最长公共子序列**
 
@@ -268,5 +314,49 @@ var minDistance = function(word1, word2) {
     }
 
     return dp[len1][len2]
+};
+```
+
+**221. 最大正方形**
+
+```js
+// 在一个由 '0' 和 '1' 组成的二维矩阵内，找到只包含 '1' 的最大正方形，并返回其面积。
+
+// 输入：matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]
+// 输出：4
+
+// 输入：matrix = [["0","1"],["1","0"]]
+// 输出：1
+
+// 输入：matrix = [["0"]]
+// 输出：0
+
+/**
+ * @param {character[][]} matrix
+ * @return {number}
+ */
+var maximalSquare = function(matrix) {
+    const len1 = matrix.length
+    const len2 = matrix[0].length
+
+    const dp = new Array(len1).fill(0).map(() => new Array(len2).fill(0))
+
+    let maxSquare = 0
+
+
+    for (let i = 0; i < len1; i++) {
+        for(let j = 0; j < len2; j++) {
+            if (matrix[i][j] === '1') {
+                if (i === 0 || j === 0) {
+                    dp[i][j] = 1
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
+                }
+                maxSquare = Math.max(maxSquare, dp[i][j])
+            }
+        }
+    }
+
+    return maxSquare * maxSquare
 };
 ```
