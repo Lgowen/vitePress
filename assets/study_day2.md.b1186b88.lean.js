@@ -1,0 +1,1 @@
+import{_ as n,z as s,D as a,W as p}from"./plugin-vue_export-helper.edc68748.js";const m='{"title":"js\u57FA\u7840 #","description":"","frontmatter":{},"headers":[],"relativePath":"study/day2.md","lastUpdated":1709106039886}',t={},e=p("",12),o=[e];function c(l,r,i,k,u,g){return a(),s("div",null,o)}var y=n(t,[["render",c]]);export{m as __pageData,y as default};

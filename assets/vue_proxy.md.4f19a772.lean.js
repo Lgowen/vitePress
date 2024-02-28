@@ -1,0 +1,1 @@
+import{_ as n,z as s,D as a,W as t}from"./plugin-vue_export-helper.edc68748.js";const d='{"title":"\u54CD\u5E94\u5F0F\u6570\u636E #","description":"","frontmatter":{},"headers":[],"relativePath":"vue/proxy.md","lastUpdated":1709106039890}',p={},o=t("",7),e=[o];function c(u,l,k,i,r,f){return a(),s("div",null,e)}var y=n(p,[["render",c]]);export{d as __pageData,y as default};

@@ -1,0 +1,1 @@
+import{_ as n,z as s,D as a,W as t}from"./plugin-vue_export-helper.edc68748.js";const f='{"title":"\u6E32\u67D3\u5668 #","description":"","frontmatter":{},"headers":[],"relativePath":"vue/renderer.md","lastUpdated":1709106039890}',p={},o=t("",3),e=[o];function c(u,l,k,i,r,d){return a(),s("div",null,e)}var y=n(p,[["render",c]]);export{f as __pageData,y as default};

@@ -1,0 +1,1 @@
+import{_ as n,z as s,D as a,W as t}from"./plugin-vue_export-helper.edc68748.js";const y='{"title":"\u6808\u4E0E\u961F\u5217 #","description":"","frontmatter":{},"headers":[],"relativePath":"leetcode/day1.md","lastUpdated":1709106039878}',p={},o=t("",5),c=[o];function e(u,k,l,i,r,m){return a(),s("div",null,c)}var w=n(p,[["render",e]]);export{y as __pageData,w as default};
