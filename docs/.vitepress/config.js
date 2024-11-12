@@ -1,5 +1,5 @@
 import { readAllFiles } from "../utils";
-import { leetcodePath, studyPath, vuePath, webpackPath } from "../contant" 
+import { leetcodePath, studyPath, vuePath, webpackPath, hot100 } from "../contant" 
 
 module.exports = {
   title: "前端小文", // 网站标题
@@ -34,7 +34,8 @@ module.exports = {
       "/leetcode/": readAllFiles(leetcodePath, true),
       "/study/": readAllFiles(studyPath),
       "/vue/": readAllFiles(vuePath),
-      "webpack": readAllFiles(webpackPath)
+      "webpack": readAllFiles(webpackPath),
+      "hot100":  readAllFiles(hot100)
     },
   },
 };
