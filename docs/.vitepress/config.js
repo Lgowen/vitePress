@@ -27,7 +27,8 @@ module.exports = {
       { text: "前端基础", link: "leetcode/day1" },
       { text: "日常学习", link: "study/day1" },
       { text: 'vue', link: "vue/v-model"},
-      { text: 'webpack', link: "webpack/demo"}
+      { text: 'webpack', link: "webpack/demo"},
+      { text: 'hot100', link: "hot100/day1"}
     ],
     // 侧边栏
     sidebar: {
