@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>响应式数据 # | 前端小文</title>
+    <meta name="description" content="leetcode share.">
+    <link rel="stylesheet" href="/vitePress/assets/style.106e1cbf.css">
+    <link rel="modulepreload" href="/vitePress/assets/plugin-vue_export-helper.fc7452c3.js">
+    <link rel="modulepreload" href="/vitePress/assets/Home.92df640f.js">
+    <link rel="modulepreload" href="/vitePress/assets/vue_proxy.md.e49a054c.lean.js">
+    <link rel="modulepreload" href="/vitePress/assets/app.d94df543.js">
+    
+    <link rel="icon" href="/vitePress/lake.jpg">
+  <meta name="twitter:title" content="响应式数据 # | 前端小文">
+  <meta property="og:title" content="响应式数据 # | 前端小文">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="theme"><header class="nav-bar" data-v-675d8756><div class="sidebar-button" data-v-675d8756><svg class="icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z" class></path></svg></div><a class="nav-bar-title" href="/vitePress/" aria-label="前端小文, back to home" data-v-675d8756 data-v-cc01ef16><!----> 前端小文</a><div class="flex-grow" data-v-675d8756></div><div class="nav" data-v-675d8756><nav class="nav-links" data-v-675d8756 data-v-eab3edfe><!--[--><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/leetcode/day1" data-v-b8818f8c>前端基础 <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/study/day1" data-v-b8818f8c>日常学习 <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/vue/v-model" data-v-b8818f8c>vue <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/webpack/demo" data-v-b8818f8c>webpack <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/hot100/day1" data-v-b8818f8c>hot100 <!----></a></div></div><!--]--><!----><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item isExternal" href="https://github.com/Lgowen" target="_blank" rel="noopener noreferrer" data-v-b8818f8c>GitHub <svg class="icon outbound" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15" data-v-b8818f8c><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div></div></nav></div><!--[--><!--]--></header><aside class="sidebar" data-v-83e92a68><nav class="nav-links nav" data-v-83e92a68 data-v-eab3edfe><!--[--><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/leetcode/day1" data-v-b8818f8c>前端基础 <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/study/day1" data-v-b8818f8c>日常学习 <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/vue/v-model" data-v-b8818f8c>vue <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/webpack/demo" data-v-b8818f8c>webpack <!----></a></div></div><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item" href="/vitePress/hot100/day1" data-v-b8818f8c>hot100 <!----></a></div></div><!--]--><!----><div class="item" data-v-eab3edfe><div class="nav-link" data-v-eab3edfe data-v-b8818f8c><a class="item isExternal" href="https://github.com/Lgowen" target="_blank" rel="noopener noreferrer" data-v-b8818f8c>GitHub <svg class="icon outbound" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15" data-v-b8818f8c><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div></div></nav><!--[--><!--]--><ul class="sidebar-links" data-v-83e92a68><!--[--><li class="sidebar-link"><p class="sidebar-link-item">vue</p><ul class="sidebar-links"><li class="sidebar-link"><a class="sidebar-link-item active" href="/vitePress/vue/proxy"> 响应式数据 </a><!----></li><li class="sidebar-link"><a class="sidebar-link-item" href="/vitePress/vue/renderer"> 渲染器 </a><!----></li><li class="sidebar-link"><a class="sidebar-link-item" href="/vitePress/vue/v-model"> vue学习 </a><!----></li></ul></li><!--]--></ul><!--[--><!--]--></aside><div class="sidebar-mask"></div><main class="page" data-v-7eddb2c4><div class="container" data-v-7eddb2c4><!--[--><!--]--><div style="position:relative;" class="content" data-v-7eddb2c4><div><h1 id="响应式数据" tabindex="-1">响应式数据 <a class="header-anchor" href="#响应式数据" aria-hidden="true">#</a></h1><p><strong>ProxyData</strong></p><div class="language-js"><pre><code>
+
+<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;Lgowen&#39;</span><span class="token punctuation">,</span> <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">18</span> <span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> proxyData <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token function">track</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> target<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">set</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value
+
+        <span class="token function">trigger</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> key<span class="token punctuation">)</span> <span class="token comment">// 在响应式数据改变时，触发对应副作用函数</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> bucket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WeakMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 桶 -&gt; 存放target中每一个属性及其对应所有依赖</span>
+
+<span class="token comment">// WeakMap经常用于存储那些只有当key所引用的对象存在时(没有被回收)才有价值的信息。</span>
+<span class="token comment">// 如果target对象没有任何引用了，说明用户侧不再需要它了，这时垃圾回收器会完成回收任务。</span>
+<span class="token comment">// 但是如果使用Map来代替WeakMap，那么即使用户侧的代码对target没有任何引用，这个target也不会被回收，最终可能导致内存溢出</span>
+
+<span class="token comment">// 追踪响应式数据(收集依赖)</span>
+<span class="token comment">// WeakMap: {</span>
+<span class="token comment">//     name: new Map() -&gt; new Set() -&gt; key --- effentFn1 effentFn2</span>
+<span class="token comment">//     age: new Map() -&gt; new Set() -&gt; key --- effentFn3 effentFn4</span>
+<span class="token comment">// }</span>
+<span class="token keyword">function</span> <span class="token function">track</span><span class="token punctuation">(</span><span class="token parameter">target<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>activeEffect<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token comment">// 如果当前没有激活的副作用函数则返回</span>
+
+    <span class="token keyword">const</span> depsMap <span class="token operator">=</span> bucket<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token comment">// 获取这个target的一个依赖Map -&gt;  { key: Set }</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>depsMap<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        bunk<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>depsMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 如果当前这个target没有Map 则新建一个</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> deps <span class="token operator">=</span> depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token comment">// 获取这个key对应的依赖Set -&gt; [effectFn1, effectFn2]</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>deps<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        depsMap<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token punctuation">(</span>deps <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 如果当前这个key没有对应的Set 则新建一个</span>
+    <span class="token punctuation">}</span>
+
+    deps<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>activeEffect<span class="token punctuation">)</span> <span class="token comment">// 添加副作用函数</span>
+
+    activeEffect<span class="token punctuation">.</span>deps<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>deps<span class="token punctuation">)</span> <span class="token comment">// 往当前激活的副作用函数身上添加依赖(为了记录所有的依赖)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 数据改变时触发对应的副作用函数</span>
+<span class="token keyword">function</span> <span class="token function">trigger</span><span class="token punctuation">(</span><span class="token parameter">target<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword">const</span> depsMap <span class="token operator">=</span> bucket<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token comment">// 获取target对应的Map</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>depsMap<span class="token punctuation">)</span> <span class="token keyword">return</span>
+
+    <span class="token keyword">const</span> effects <span class="token operator">=</span> depsMap<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token comment">// 获取副作用函数</span>
+
+    <span class="token keyword">const</span> newEffects <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    effects <span class="token operator">&amp;&amp;</span> effects<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">fn</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 避免副作用函数嵌套导致无限循环</span>
+        <span class="token comment">// 如果当前触发的副作用函数与当前激活的副作用函数相同的话，则不重复触发，避免无限递归调用，导致栈溢出</span>
+        <span class="token comment">// effect(() =&gt; proxyData.age++) 避免该情况</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fn <span class="token operator">!==</span> activeffect<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            newEffects<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">// effects &amp;&amp; effects.forEach(fn =&gt; fn()) // 执行副作用函数</span>
+
+    newEffects<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">effectFn</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>effectFn<span class="token punctuation">.</span>options<span class="token punctuation">.</span>scheduler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 如果存在事件调度器 则按传进来的去执行</span>
+            effectFn<span class="token punctuation">.</span>options<span class="token punctuation">.</span><span class="token function">scheduler</span><span class="token punctuation">(</span>effectFn<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">// 避免在清除依赖时又同时在添加依赖导致死循环</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">let</span> activeEffect <span class="token comment">// 当前激活的副作用函数</span>
+
+<span class="token keyword">const</span> effectStack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 栈 -&gt; 保证当前执行的副作用函数是对应的(在effect嵌套时)</span>
+
+
+<span class="token keyword">function</span> <span class="token function">cleanup</span><span class="token punctuation">(</span><span class="token parameter">effectFn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> effectFn<span class="token punctuation">.</span>deps<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> deps <span class="token operator">=</span> effectFn<span class="token punctuation">.</span>deps<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        deps<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>effectFn<span class="token punctuation">)</span> <span class="token comment">// 清除当前副作用函数 </span>
+    <span class="token punctuation">}</span>
+    
+    effectFn<span class="token punctuation">.</span>deps<span class="token punctuation">.</span>length <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// 重置副作用函数的依赖</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> options <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">effectFn</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+        <span class="token function">cleanup</span><span class="token punctuation">(</span>effectFn<span class="token punctuation">)</span> <span class="token comment">// 在执行副作用函数之前先清除所有与副作用函数相关的依赖</span>
+
+        activeEffect <span class="token operator">=</span> effectFn <span class="token comment">// 将当前副作用函数赋值给全局当前激活的副作用</span>
+
+        effectStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>activeEffect<span class="token punctuation">)</span> <span class="token comment">// 栈中存放当前执行的副作用函数(栈顶存放的永远是嵌套副作用函数最底层的那个)</span>
+
+        <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 执行传进来的副作用函数</span>
+
+        effectStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 出栈</span>
+    
+        activeEffect <span class="token operator">=</span> effectStack<span class="token punctuation">[</span>effectStack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token comment">// 更新当前激活的副作用函数为之前的值(栈底存放的永远是嵌套副作用函数最外层的那个)</span>
+    <span class="token punctuation">}</span>
+
+    effectFn<span class="token punctuation">.</span>options <span class="token operator">=</span> options <span class="token comment">// 调度器选项</span>
+
+    effectFn<span class="token punctuation">.</span>deps <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 每次触发前先清空所有的依赖 -&gt; 以保证有多余的副作用依赖存在</span>
+
+    <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 执行</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 执行副作用函数</span>
+<span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 这里分别触发了proxyData.name和proxyData.age的get方法，即给它们两个属性都设置上了对应的副作用函数依赖, 即这里传入的方法</span>
+    window<span class="token punctuation">.</span>body<span class="token punctuation">.</span>innerText <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>proxyData<span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">今年</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>proxyData<span class="token punctuation">.</span>age<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">岁了</span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">}</span><span class="token punctuation">.</span> <span class="token punctuation">{</span>
+    <span class="token function">scheduler</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span> <span class="token comment">// 用于时间调度</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 避免重复刷新</span>
+
+<span class="token keyword">const</span> jobQueue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 创建job队列 Set结构可以去重避免重复添加</span>
+<span class="token keyword">const</span> isFlushing <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">// 判断是否正在刷新队列</span>
+<span class="token keyword">const</span> p <span class="token operator">=</span> Promise<span class="token punctuation">.</span>resolve <span class="token comment">// Promise处理异步使副作用函数在一轮事件循环中执行</span>
+<span class="token keyword">function</span> <span class="token function">flushJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isFlushing<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token comment">// 假如队列正在刷新 就不重复操作了</span>
+
+    isFlushing <span class="token operator">=</span> <span class="token boolean">true</span>
+
+    p<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        jobQueue<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">job</span> <span class="token operator">=&gt;</span> <span class="token function">job</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">finally</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        isFlushing <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">foo</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">/* ... */</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 执行副作用函数</span>
+<span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>foo<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">.</span> <span class="token punctuation">{</span>
+    <span class="token function">scheduler</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        jobQueue<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span> <span class="token comment">// 往队列中添加副作用函数(如下可能会往队列中推出两次相同的副作用函数，因为Set结构自动去重所以最终只会执行一行)</span>
+
+        <span class="token function">flushJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 刷新队列(实际上如果在一轮事件循环中该队列正在刷新的话，则只会执行一次)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+obj<span class="token punctuation">.</span>foo<span class="token operator">++</span>
+obj<span class="token punctuation">.</span>foo<span class="token operator">++</span>
+
+<span class="token comment">// 1 首次执行副作用函数打印1</span>
+<span class="token comment">// 3 两次的obj.foo因为赋值操作触发的副作用函数会在微任务队列中取出执行 所以拿到的结果是最后赋值后的结果(减少了重复渲染)</span>
+
+
+<span class="token comment">// 该功能类似Vue.js中连续多次修改响应式数据但只会触发一次更新，实际上Vue.js内部实现了一个更加完善的调度器，思路与上文介绍相同</span>
+
+</code></pre></div><p><strong>computed和lazy</strong></p><div class="language-js"><pre><code><span class="token comment">// 假如我们想给副作用函数设置懒执行</span>
+
+
+<span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;lazy function&#39;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">lazy</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">function</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> options <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">effectFn</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+        <span class="token function">cleanup</span><span class="token punctuation">(</span>effectFn<span class="token punctuation">)</span> <span class="token comment">// 在执行副作用函数之前先清除所有与副作用函数相关的依赖</span>
+
+        activeEffect <span class="token operator">=</span> effectFn <span class="token comment">// 将当前副作用函数赋值给全局当前激活的副作用</span>
+
+        effectStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>activeEffect<span class="token punctuation">)</span> <span class="token comment">// 栈中存放当前执行的副作用函数(栈顶存放的永远是嵌套副作用函数最底层的那个)</span>
+
+        <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 执行传进来的副作用函数(获取副作用函数执行的结果)</span>
+
+        effectStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 出栈</span>
+    
+        activeEffect <span class="token operator">=</span> effectStack<span class="token punctuation">[</span>effectStack<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token comment">// 更新当前激活的副作用函数为之前的值(栈底存放的永远是嵌套副作用函数最外层的那个)</span>
+
+        <span class="token keyword">return</span> res <span class="token comment">// 返回副作用函数的结果</span>
+    <span class="token punctuation">}</span>
+
+    effectFn<span class="token punctuation">.</span>options <span class="token operator">=</span> options <span class="token comment">// 调度器选项</span>
+
+    effectFn<span class="token punctuation">.</span>deps <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment">// 每次触发前先清空所有的依赖 -&gt; 以保证有多余的副作用依赖存在</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>options<span class="token punctuation">.</span>lazy<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 如果没有设置lazy的话才立刻执行</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> effectFn <span class="token comment">// 返回的这个函数可用于用户自行啥时候调用都可以</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> effectFn <span class="token operator">=</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;lazy function&#39;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">lazy</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 该函数为副作用函数</span>
+
+<span class="token comment">// 假如该副作用函数是返回一个值,即可以作为computed属性的getter</span>
+
+<span class="token keyword">const</span> effectFn <span class="token operator">=</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> obj<span class="token punctuation">.</span>age <span class="token operator">+</span> obj<span class="token punctuation">.</span>year
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">lazy</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> value <span class="token operator">=</span> <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 副作用函数执行完后得到的结果</span>
+
+<span class="token comment">// 接下来我们就可以写一个computed了</span>
+<span class="token keyword">function</span> <span class="token function">computed</span><span class="token punctuation">(</span><span class="token parameter">getter</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> value <span class="token comment">// computed缓存的值</span>
+
+    <span class="token keyword">let</span> dirty <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token comment">// 控制副作用函数是否执行</span>
+
+    <span class="token keyword">const</span> effectFn <span class="token operator">=</span> <span class="token function">effect</span><span class="token punctuation">(</span>getter<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">lazy</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token function">scheduler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>dirty<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                dirty <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token comment">// 当computed的值依赖的响应式数据改变时，触发setter时会走trigger</span>
+
+                <span class="token function">trigger</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token string">&#39;value&#39;</span><span class="token punctuation">)</span> <span class="token comment">// 当计算属性依赖的响应式数据发生改变时，可以手动调用trigget函数触发响应</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword">get</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            
+            <span class="token comment">// 在获取值的时候假如dirty为true的时候，才表示要重新去获取值，否则使用缓存</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>dirty<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                value <span class="token operator">=</span> <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+                dirty <span class="token operator">=</span> <span class="token boolean">false</span>
+            <span class="token punctuation">}</span>
+            
+            <span class="token function">track</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token string">&#39;value&#39;</span><span class="token punctuation">)</span> <span class="token comment">// 手动触发track函数，在读取computed值的时候去追踪并收集它的依赖</span>
+
+            <span class="token keyword">return</span> value
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> obj
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token literal-property property">year</span><span class="token operator">:</span> <span class="token number">1998</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">/* ... */</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> computedValue <span class="token operator">=</span> <span class="token function">computed</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> obj<span class="token punctuation">.</span>age <span class="token operator">+</span> obj<span class="token punctuation">.</span>yaer<span class="token punctuation">)</span>
+
+<span class="token comment">// console.log(computedValue.value)</span>
+<span class="token comment">// 在获取computedValue值的时候，首次会触发其副作用函数的执行</span>
+<span class="token comment">// 其副作用函数的执行又会触发 然后会把() =&gt; obj.age + obj.yaer当作当前激活的副作用函数</span>
+<span class="token comment">// obj.age和obj.year的getter，然后会去调用track函数追踪并收集obj.age和obj.yaer对应的依赖，Set[ () =&gt; obj.age + obj.yaer ]</span>
+<span class="token comment">// 然后返回值</span>
+
+obj<span class="token punctuation">.</span>age<span class="token operator">++</span>
+<span class="token comment">// 比如说 obj.age++ 这时候触发了obj.age的getter和setter，会将computed值dirty设置为true</span>
+<span class="token comment">// 那么在下一次获取computed的值时会重新触发computed值的副作用函数以到达更新值的目的</span>
+
+<span class="token comment">// 但是如果在另外一个副作用函数中去读取computed的值的话，就会出现副作用函数的嵌套，导致外层的effect不会被内层的effect中的响应式数据收集</span>
+<span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 在另一个副作用函数读取computed的值</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>computedValue<span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// 所以我们需要去主动触发更新</span>
+
+<span class="token comment">// 当读取一个计算属性的value值时，我们手动调用track函数，把计算属性返回的对象obj作为target，同时作为第一个参数传递给track函数。</span>
+<span class="token comment">// 当计算属性所依赖的响应式数据变化时，会执行调度器函数，在调度器函数内手动调用trigger函数触发响应即可。</span>
+<span class="token comment">// 也就是说我们需要给computed属性在获取值的时候收集它的依赖，在它依赖的响应式数据发生改变时触发副作用函数</span>
+
+<span class="token comment">// computed(obj)</span>
+<span class="token comment">//     -----------value</span>
+<span class="token comment">//                  ----------effectFn</span>
+</code></pre></div><p><strong>watch</strong></p><div class="language-js"><pre><code>
+<span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Proxy</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">age</span><span class="token operator">:</span> <span class="token number">18</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token comment">/* ... */</span><span class="token punctuation">)</span>
+
+<span class="token function">watch</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">,</span> onInvalidate</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;obj中的值变化了&#39;</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">let</span> expired <span class="token operator">=</span> <span class="token boolean">false</span> <span class="token comment">// 表示副作用函数没有过期</span>
+    
+    <span class="token comment">// 注册副作用函数过期时执行的回调函数（首次执行副作用函数会注册）</span>
+    <span class="token function">onInvalidate</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        expired <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">&#39;/api/list&#39;</span><span class="token punctuation">)</span>
+    
+    <span class="token comment">// 只有当该副作用函数没有过期的时候才会执行</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>expired<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        myData <span class="token operator">=</span> res
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">immediate</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 在注册watch的时候立即执行一次回调函数</span>
+    <span class="token literal-property property">flush</span><span class="token operator">:</span> <span class="token string">&#39;post&#39;</span> <span class="token comment">// pre(组件更新前) sync()</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 上面的watch方法其实是想监听obj的所有属性，也可以是一个getter函数监听响应式数据中的某一个值的变化，从而执行回调函数，且回调函数中可以拿到新的值和旧的值</span>
+
+<span class="token keyword">function</span> <span class="token function">watch</span><span class="token punctuation">(</span><span class="token parameter">source<span class="token punctuation">,</span> cb<span class="token punctuation">,</span> options <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">let</span> getter
+
+    <span class="token keyword">function</span> <span class="token function">onInvalidate</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        cleanup <span class="token operator">=</span> fn
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">let</span> cleanup
+    
+    <span class="token comment">// 为了立即调用抽离的函数</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">job</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+            newValue <span class="token operator">=</span> <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 在source变化时触发获取新的值</span>
+            
+            <span class="token comment">// 假如该副作用函数有传该副作用函数过期时的回调 则执行</span>
+            <span class="token comment">// 在执行副作用函数前执行（使得该副作用函数过期)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cleanup<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">cleanup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token function">cb</span><span class="token punctuation">(</span>newValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">,</span> onInvalidate<span class="token punctuation">)</span> <span class="token comment">// 执行回调函数并且传值（这时候才会执行onInvalidate将该副作用函数变为过期的）</span>
+
+            oldValue <span class="token operator">=</span> newValue <span class="token comment">// 执行完回调函数之后 更新oldValue的值 以保证下一次拿到的数据是正确的</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 假如source是一个函数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> source <span class="token operator">===</span> <span class="token string">&#39;function&#39;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        getter <span class="token operator">=</span> source
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function-variable function">getter</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">traverse</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token comment">// 递归读取该对象的每一个值(这里暂时不考虑数组的情况) 触发值的getter收集(track)依赖</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">let</span> newValue<span class="token punctuation">,</span> oldValue
+
+
+    <span class="token keyword">const</span> effectFn <span class="token operator">=</span> <span class="token function">effect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">getter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">lazy</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 设置lazy可以使的该副作用函数不立刻执行 可用于自行执行 并且获取副作用函数的返回值(getter的返回值)</span>
+        <span class="token comment">// 在source中的所有值只要发生变化时，则会触发其getter执行(trigger)对应的副作用函数(并且执行调度方法)scheduler</span>
+        <span class="token function-variable function">scheduler</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>flush <span class="token operator">===</span> <span class="token string">&#39;post&#39;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 放进微任务队列等DOM更新后再执行 副作用函数放到微任务队列 并等待DOM更新后结束后再执行</span>
+                <span class="token keyword">const</span> p <span class="token operator">=</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                p<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>job<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">job</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>options<span class="token punctuation">.</span>immediate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">job</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 假如有传参数就立即先执行一次回调函数</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        oldValue <span class="token operator">=</span> <span class="token function">effectFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 首次执行获取getter的值</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">traverse</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> seen <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 假如该值是一个基本数据类型或者已经读过了(用Set存储避免循环引用) 就不需要继续读了</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> source <span class="token operator">!==</span><span class="token operator">=</span> <span class="token string">&#39;object&#39;</span> <span class="token operator">||</span> source <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> seen<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> 
+    
+    seen<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span> <span class="token comment">// 存取读过的属性</span>
+
+    <span class="token comment">// 递归读取每一个属性</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> key <span class="token keyword">in</span> source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">traverse</span><span class="token punctuation">(</span>source<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> seen<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> source
+<span class="token punctuation">}</span>
+
+
+</code></pre></div></div></div><footer class="page-footer" data-v-7eddb2c4 data-v-fb8d84c6><div class="edit" data-v-fb8d84c6><div class="edit-link" data-v-fb8d84c6 data-v-1ed99556><!----></div></div><div class="updated" data-v-fb8d84c6><!----></div></footer><div class="next-and-prev-link" data-v-7eddb2c4 data-v-38ede35f><div class="container" data-v-38ede35f><div class="prev" data-v-38ede35f><!----></div><div class="next" data-v-38ede35f><a class="link" href="/vitePress/vue/renderer" data-v-38ede35f><span class="text" data-v-38ede35f> 渲染器 </span><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="icon icon-next" data-v-38ede35f><path d="M19.9,12.4c0.1-0.2,0.1-0.5,0-0.8c-0.1-0.1-0.1-0.2-0.2-0.3l-7-7c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l5.3,5.3H5c-0.6,0-1,0.4-1,1s0.4,1,1,1h11.6l-5.3,5.3c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3l7-7C19.8,12.6,19.9,12.5,19.9,12.4z"></path></svg></a></div></div></div><!--[--><!--]--></div></main></div><!----><!--]--></div>
+    <script>__VP_HASH_MAP__ = JSON.parse("{\"hot100_day1.md\":\"ec613d1d\",\"hot100_day10.md\":\"c713b7e2\",\"hot100_day11.md\":\"686c3aae\",\"hot100_day12.md\":\"1abfb837\",\"hot100_day13.md\":\"db73b8c9\",\"hot100_day14.md\":\"1cfb3021\",\"hot100_day15.md\":\"d9524b86\",\"hot100_day16.md\":\"2d7f6a58\",\"hot100_day17.md\":\"b6a1e02c\",\"hot100_day18.md\":\"2b7079f5\",\"hot100_day19.md\":\"d618baf2\",\"hot100_day2.md\":\"4791e442\",\"hot100_day20.md\":\"85bab813\",\"hot100_day21.md\":\"19916b28\",\"hot100_day22.md\":\"294c6691\",\"hot100_day23.md\":\"cc1cd9e3\",\"hot100_day24.md\":\"e2ae92c1\",\"hot100_day25.md\":\"df69acf6\",\"hot100_day3.md\":\"2a26f4ef\",\"hot100_day4.md\":\"ee5ae449\",\"hot100_day5.md\":\"c5b14809\",\"hot100_day6.md\":\"6685f061\",\"hot100_day7.md\":\"072678e3\",\"hot100_day8.md\":\"89adb55a\",\"hot100_day9.md\":\"5f4f5fb6\",\"index.md\":\"ce12b308\",\"leetcode_day1.md\":\"3e70385e\",\"leetcode_day10.md\":\"eddae7c1\",\"leetcode_day11.md\":\"00f5ab08\",\"leetcode_day12.md\":\"0f31201c\",\"leetcode_day13.md\":\"cb5c6490\",\"leetcode_day14.md\":\"a39c92e7\",\"leetcode_day15.md\":\"bb294596\",\"leetcode_day16.md\":\"9a6966b6\",\"leetcode_day17.md\":\"1aebc24e\",\"leetcode_day18.md\":\"9f6ac6b0\",\"leetcode_day19.md\":\"491acf25\",\"leetcode_day2.md\":\"ba254dec\",\"leetcode_day20.md\":\"7fa257c8\",\"leetcode_day21.md\":\"892d94cc\",\"leetcode_day22.md\":\"e19af920\",\"leetcode_day3.md\":\"1a286f2f\",\"leetcode_day4.md\":\"ff458613\",\"leetcode_day5.md\":\"da85cb0e\",\"leetcode_day6.md\":\"64a9e080\",\"leetcode_day7.md\":\"45e1e013\",\"leetcode_day8.md\":\"281aac17\",\"leetcode_day9.md\":\"69c7dfa9\",\"study_arc-progress-bar.md\":\"d959ee2f\",\"study_css.md\":\"aecd3996\",\"study_day1.md\":\"101e58c5\",\"study_day2.md\":\"d1d51311\",\"study_day3.md\":\"b3b685bc\",\"study_meeting.md\":\"13dbe645\",\"study_promise.md\":\"cd4aecce\",\"study_text-expansion.md\":\"afe6fd8b\",\"vue_proxy.md\":\"e49a054c\",\"vue_renderer.md\":\"7fef325c\",\"vue_v-model.md\":\"760e0418\",\"webpack_demo.md\":\"1cd7a2ed\"}")</script>
+    <script type="module" async src="/vitePress/assets/app.d94df543.js"></script>
+    
+  </body>
+</html>
